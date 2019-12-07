@@ -15,14 +15,25 @@ namespace Domain
         public static void Main()
         {
             
-            // Connecting to DB.
-            Client.GetClient().Init(HOST, DBNAME, USER, PASSWORD);
+            // Conectando a la DB.
             
-            // Reading Data.
-            Console.WriteLine(string.Join(Environment.NewLine,LocationManager.GetLocationManager().GetStorageList()));
+            DbCliente.Init(HOST, DBNAME, USER, PASSWORD);
             
-            // Finding By ID.
-            Console.WriteLine(LocationManager.GetLocationManager().FindStorage(1));
+            // Trayendo todas las bodegas.
+            
+            Console.WriteLine(Sucursal.GetBodegas());
+          
+            // Trayendo entidades de Localizacion.
+        
+            Bodega bodega = Sucursal.FindBodega(1);
+            Pasillo pasillo = bodega.GetPasillos()[0];
+            Estante estante = pasillo.GetEstantes()[0];
+            Localizacion localizacion = estante.GetLocalizaciones()[0];
+            
+            Console.WriteLine(bodega);
+            Console.WriteLine(pasillo);
+            Console.WriteLine(estante);
+            Console.WriteLine(localizacion);
             
         }
     }
