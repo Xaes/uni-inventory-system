@@ -1,6 +1,7 @@
 using System;
 using Domain.DB;
 using Domain.Locations;
+using Domain.Providers;
 
 namespace Domain
 {
@@ -19,22 +20,25 @@ namespace Domain
             
             DbCliente.Init(HOST, DBNAME, USER, PASSWORD);
             
-            // Trayendo todas las bodegas.
+            // Guardando Entidades.
+
+            var bodega = Bodega.AgregarBodega("Bodega #1", "10001");
+            var pasillo = bodega.AgregarPasillo("10001");
+            var estante = pasillo.AgregarEstante("10002", 1);
+            var localizacion = estante.AgregarLocalizacion("10003");
             
-            Console.WriteLine(Sucursal.GetBodegas());
-          
-            // Trayendo entidades de Localizacion.
-        
-            Bodega bodega = Sucursal.FindBodega(1);
-            Pasillo pasillo = bodega.GetPasillos()[0];
-            Estante estante = pasillo.GetEstantes()[0];
-            Localizacion localizacion = estante.GetLocalizaciones()[0];
+            // Leyendo Entidades.
             
-            Console.WriteLine(bodega);
-            Console.WriteLine(pasillo);
-            Console.WriteLine(estante);
-            Console.WriteLine(localizacion);
+            Console.WriteLine(bodega.ToString());
+            Console.WriteLine(pasillo.ToString());
+            Console.WriteLine(estante.ToString());
+            Console.WriteLine(localizacion.ToString());
+
+            // Creando / Guardando un nuevo Proveedor.
             
+            var proveedor = Proveedor.AgregarProveedor("Proveedor #1");
+            Console.WriteLine(proveedor.ToString());
+
         }
     }
 }
