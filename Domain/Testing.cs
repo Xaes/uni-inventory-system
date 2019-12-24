@@ -2,6 +2,7 @@ using System;
 using Domain.DB;
 using Domain.Locations;
 using Domain.Providers;
+using Domain.Inventory;
 
 namespace Domain
 {
@@ -38,7 +39,17 @@ namespace Domain
             
             var proveedor = Proveedor.AgregarProveedor("Proveedor #1");
             Console.WriteLine(proveedor.ToString());
+            
+            // Creando / Abriendo / Guardando un nuevos Periodos.
 
+            var periodo1 = Periodo.AgregarPeriodo(2018, "Año 2018");
+            var periodo2 = Periodo.AgregarPeriodo(2019, "Año 2019");
+            periodo2.Abrir();
+            
+            Console.WriteLine("Periodo Activo: " + Periodo.GetPeriodoActivo().ToString());
+            Console.WriteLine("Periodo Sin Usar: " + periodo1.ToString());
+            Console.WriteLine(Periodo.GetPeriodos());
+            
         }
     }
 }
