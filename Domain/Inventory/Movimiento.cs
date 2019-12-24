@@ -14,23 +14,7 @@ namespace Domain.Inventory
         private string TipoTransaccion;
 
         private Movimiento() {}
-        
-        public Movimiento(int movimientoId, int localizacionInicialId, int localizacionFinalId,
-            float costoTotal, float costoUnitario, float precioVentaUnitario,
-            int unidades, DateTime fecha, string tipoTransaccion
-        )
-        {
-            this.Movimiento_ID = movimientoId;
-            this.LocalizacionInicial_ID = localizacionInicialId;
-            this.LocalizacionFinal_ID = localizacionFinalId;
-            this.CostoTotal = costoTotal;
-            this.CostoUnitario = costoUnitario;
-            this.PrecioVentaUnitario = precioVentaUnitario;
-            this.Unidades = unidades;
-            this.Fecha = fecha;
-            this.TipoTransaccion = tipoTransaccion;
-        }
-        
+
         public Movimiento(int localizacionInicialId, int localizacionFinalId,
             float costoTotal, float costoUnitario, float precioVentaUnitario,
             int unidades, DateTime fecha, string tipoTransaccion

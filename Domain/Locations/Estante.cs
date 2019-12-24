@@ -9,7 +9,7 @@ namespace Domain.Locations
     public class Estante
     {
         private int Estante_ID { get; set; }
-        private int Pasillo_ID { get; }
+        private int FK_Pasillo_ID { get; }
         private int Secuencia_Loc { get; set; }
         public string Codigo { get; }
         
@@ -18,7 +18,7 @@ namespace Domain.Locations
         internal Estante(string codigo, int pasilloId, int secuenciaLoc)
         {
             this.Codigo = codigo ?? throw new ArgumentNullException(nameof(codigo));
-            this.Pasillo_ID = pasilloId;
+            this.FK_Pasillo_ID = pasilloId;
             this.Secuencia_Loc = secuenciaLoc;
         }
 
@@ -30,8 +30,8 @@ namespace Domain.Locations
 
         public Pasillo GetPasillo()
         {
-            const string sqlString = "Select * from Pasillo Where Pasillo_ID = @Pasillo_ID";
-            return DbCliente.GetConexion().QueryFirstOrDefault<Pasillo>(sqlString, new {this.Pasillo_ID});
+            const string sqlString = "Select * from Pasillo Where Pasillo_ID = @FK_Pasillo_ID";
+            return DbCliente.GetConexion().QueryFirstOrDefault<Pasillo>(sqlString, new {this.FK_Pasillo_ID});
         }
 
         public Localizacion AgregarLocalizacion()
@@ -61,10 +61,10 @@ namespace Domain.Locations
 
         public void Insertar()
         {
-            const string sqlString = "Insert Into Estante (Codigo, Pasillo_ID, Secuencia_Loc) Values (@Codigo, @Pasillo_ID, @Secuencia_Loc);" +
+            const string sqlString = "Insert Into Estante (Codigo, FK_Pasillo_ID, Secuencia_Loc) Values (@Codigo, @FK_Pasillo_ID, @Secuencia_Loc);" +
                                      "Select Cast(SCOPE_IDENTITY() as int)";
 
-            var id = (int) DbCliente.GetConexion().ExecuteScalar(sqlString, new {this.Codigo, this.Pasillo_ID, this.Secuencia_Loc});
+            var id = (int) DbCliente.GetConexion().ExecuteScalar(sqlString, new {this.Codigo, this.FK_Pasillo_ID, this.Secuencia_Loc});
             this.Estante_ID = id;
         }
 
@@ -77,7 +77,7 @@ namespace Domain.Locations
 
         public override string ToString()
         {
-            return $"Estante: [Codigo: {Codigo} / ID: {Estante_ID} / Pasillo ID: {Pasillo_ID}]";
+            return $"Estante: [Codigo: {Codigo} / ID: {Estante_ID} / Pasillo ID: {FK_Pasillo_ID}]";
         }
 
     }
