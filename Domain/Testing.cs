@@ -22,10 +22,10 @@ namespace Domain
             
             // Guardando Entidades.
 
-            var bodega = Bodega.AgregarBodega("Bodega #1", "10001");
+            var bodega = Bodega.AgregarBodega("Bodega #1", "10000");
             var pasillo = bodega.AgregarPasillo("10001");
             var estante = pasillo.AgregarEstante("10002", 1);
-            var localizacion = estante.AgregarLocalizacion("10003");
+            var localizacion = estante.AgregarLocalizacion();
             
             // Leyendo Entidades.
             

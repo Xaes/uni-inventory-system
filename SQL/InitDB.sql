@@ -39,7 +39,7 @@ IF NOT EXISTS (SELECT  * FROM sysobjects WHERE name='Estante' and xtype='U')
 IF NOT EXISTS (SELECT  * FROM sysobjects WHERE name='Localizacion' and xtype='U')
     CREATE TABLE Localizacion
     (
-        Codigo VARCHAR(25) NOT NULL,
+        Codigo VARCHAR(25) NOT NULL UNIQUE,
         Estante_ID int FOREIGN KEY REFERENCES Estante(Estante_ID),
 
         CONSTRAINT PK_Localizacion PRIMARY KEY NONCLUSTERED (Codigo),

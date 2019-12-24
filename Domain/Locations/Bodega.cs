@@ -11,7 +11,7 @@ namespace Domain.Locations
         
         public int Bodega_ID { get; }
         private string Nombre { get; }
-        private string Codigo { get; }
+        public string Codigo { get; }
         
         public Bodega() {}
 

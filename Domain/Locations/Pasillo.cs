@@ -9,9 +9,9 @@ namespace Domain.Locations
     public class Pasillo
     {
         
-        private int Pasillo_ID { get; set; }
+        public int Pasillo_ID { get; private set; }
         private int Bodega_ID { get; }
-        private string Codigo { get; }
+        public string Codigo { get; }
         
         public Pasillo() {}
 
@@ -39,6 +39,12 @@ namespace Domain.Locations
             var estante = new Estante(codigo, this.Pasillo_ID, secuenciaLoc);
             estante.Insertar();
             return estante;
+        }
+
+        public Bodega GetBodega()
+        {
+            const string sqlString = "Select * from Bodega Where Bodega_ID = @Bodega_ID";
+            return DbCliente.GetConexion().QueryFirstOrDefault<Bodega>(sqlString, new { this.Bodega_ID });
         }
 
         public void Insertar()
