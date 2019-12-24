@@ -10,7 +10,7 @@ namespace Domain.Locations
     {
         
         public int Pasillo_ID { get; private set; }
-        private int Bodega_ID { get; }
+        private int FK_Bodega_ID { get; }
         public string Codigo { get; }
         
         public Pasillo() {}
@@ -18,7 +18,7 @@ namespace Domain.Locations
         public Pasillo(string codigo, int bodega_ID)
         {
             this.Codigo = codigo ?? throw new ArgumentNullException(nameof(codigo));
-            this.Bodega_ID = bodega_ID;
+            this.FK_Bodega_ID = bodega_ID;
         }
 
         public List<Estante> GetEstantes()
@@ -36,21 +36,21 @@ namespace Domain.Locations
 
         public Bodega GetBodega()
         {
-            const string sqlString = "Select * from Bodega Where Bodega_ID = @Bodega_ID";
-            return DbCliente.GetConexion().QueryFirstOrDefault<Bodega>(sqlString, new { this.Bodega_ID });
+            const string sqlString = "Select * from Bodega Where Bodega_ID = @FK_Bodega_ID";
+            return DbCliente.GetConexion().QueryFirstOrDefault<Bodega>(sqlString, new { this.FK_Bodega_ID });
         }
 
         public void Insertar()
         {
-            const string sqlString = "Insert Into Pasillo (Codigo, Bodega_ID) Values (@Codigo, @Bodega_ID);" +
+            const string sqlString = "Insert Into Pasillo (Codigo, FK_Bodega_ID) Values (@Codigo, @FK_Bodega_ID);" +
                                      "Select Cast(SCOPE_IDENTITY() as int)";
 
-            this.Pasillo_ID = (int) DbCliente.GetConexion().ExecuteScalar(sqlString, new { this.Codigo, this.Bodega_ID });
+            this.Pasillo_ID = (int) DbCliente.GetConexion().ExecuteScalar(sqlString, new { this.Codigo, this.FK_Bodega_ID });
         }
 
         public override String ToString()
         {
-            return $"Pasillo: [Codigo: {Codigo} / ID: {Pasillo_ID} / Bodega ID: {Bodega_ID}]";
+            return $"Pasillo: [Codigo: {Codigo} / ID: {Pasillo_ID} / Bodega ID: {FK_Bodega_ID}]";
         }
     }
 }

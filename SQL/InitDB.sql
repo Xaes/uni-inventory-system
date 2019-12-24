@@ -1,5 +1,4 @@
-CREATE DATABASE inventorydb;
-USE inventorydb;
+/** CREATE DATABASE inventorydb; **/
 
 /** CREANDO TABLAS **/
 
@@ -18,10 +17,10 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Pasillo' and xtype='U')
     (
 		Pasillo_ID int IDENTITY,
         Codigo VARCHAR(5) NOT NULL,
-        Bodega_ID int NOT NULL FOREIGN KEY REFERENCES Bodega(Bodega_ID),
+        FK_Bodega_ID int NOT NULL FOREIGN KEY REFERENCES Bodega(Bodega_ID),
 
         CONSTRAINT PK_Pasillo PRIMARY KEY NONCLUSTERED (Pasillo_ID),
-        CONSTRAINT UK_Pasillo UNIQUE (Bodega_ID, Codigo)
+        CONSTRAINT UK_Pasillo UNIQUE (Codigo)
     );
 
 IF NOT EXISTS (SELECT  * FROM sysobjects WHERE name='Estante' and xtype='U')
@@ -29,21 +28,21 @@ IF NOT EXISTS (SELECT  * FROM sysobjects WHERE name='Estante' and xtype='U')
     (
         Estante_ID int IDENTITY,
         Codigo VARCHAR(5) NOT NULL,
-        Pasillo_ID int FOREIGN KEY REFERENCES Pasillo(Pasillo_ID),
+        FK_Pasillo_ID int FOREIGN KEY REFERENCES Pasillo(Pasillo_ID),
         Secuencia_Loc int,
 
         CONSTRAINT PK_Estante PRIMARY KEY NONCLUSTERED (Estante_ID),
-        CONSTRAINT UK_Estante UNIQUE (Pasillo_ID, Codigo)
+        CONSTRAINT UK_Estante UNIQUE (Codigo)
     );
 
 IF NOT EXISTS (SELECT  * FROM sysobjects WHERE name='Localizacion' and xtype='U')
     CREATE TABLE Localizacion
     (
         Codigo VARCHAR(25) NOT NULL UNIQUE,
-        Estante_ID int FOREIGN KEY REFERENCES Estante(Estante_ID),
+        FK_Estante_ID int FOREIGN KEY REFERENCES Estante(Estante_ID),
 
         CONSTRAINT PK_Localizacion PRIMARY KEY NONCLUSTERED (Codigo),
-        CONSTRAINT UK_Localizacion UNIQUE (Estante_ID, Codigo)
+        CONSTRAINT UK_Localizacion UNIQUE (Codigo)
     );
 
 /** DOMINIO: PRODUCTO **/
@@ -124,13 +123,14 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Periodo' and xtype='U')
     CREATE TABLE Periodo
     (
         Periodo_Id int IDENTITY,
-        Periodo_Fiscal int NOT NULL UNIQUE,
+        Periodo_Fiscal int NOT NULL,
         FechaInicio date NOT NULL,
         FechaFinal date NOT NULL,
         Estado VARCHAR(15) NOT NULL CHECK (Estado IN('ABIERTO', 'CERRADO', 'NOUSADO')),
         Nombre VARCHAR(20) NOT NULL
 
-        CONSTRAINT PK_Periodo PRIMARY KEY NONCLUSTERED (Periodo_Id)
+        CONSTRAINT PK_Periodo PRIMARY KEY NONCLUSTERED (Periodo_Id),
+        CONSTRAINT UK_Periodo UNIQUE (Nombre, Periodo_Fiscal)
     )
 
 IF NOT EXISTS (SELECT  * FROM sysobjects WHERE name='Movimiento' and xtype='U')
