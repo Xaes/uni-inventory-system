@@ -17,17 +17,10 @@ namespace Domain.Locations
 
         public Pasillo(string codigo, int bodega_ID)
         {
-            this.Codigo = codigo;
+            this.Codigo = codigo ?? throw new ArgumentNullException(nameof(codigo));
             this.Bodega_ID = bodega_ID;
         }
 
-        public Pasillo(string codigo, int pasilloId, int bodegaId)
-        {
-            this.Codigo = codigo;
-            this.Pasillo_ID = pasilloId;
-            this.Bodega_ID = bodegaId;
-        }
-        
         public List<Estante> GetEstantes()
         {
             const string sqlString = "Select * from Estante Where Pasillo_ID = @Pasillo_ID";

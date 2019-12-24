@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dapper;
@@ -14,21 +15,13 @@ namespace Domain.Locations
         
         public Estante() {}
 
-        public Estante(string codigo, int pasilloId, int secuenciaLoc)
+        internal Estante(string codigo, int pasilloId, int secuenciaLoc)
         {
-            this.Codigo = codigo;
+            this.Codigo = codigo ?? throw new ArgumentNullException(nameof(codigo));
             this.Pasillo_ID = pasilloId;
             this.Secuencia_Loc = secuenciaLoc;
         }
-        
-        public Estante(int estanteId, string codigo, int pasilloId, int secuenciaLoc)
-        {
-            this.Estante_ID = estanteId;
-            this.Codigo = codigo;
-            this.Pasillo_ID = pasilloId;
-            this.Secuencia_Loc = secuenciaLoc;
-        }
-        
+
         public List<Localizacion> GetLocalizaciones()
         {
             const string sqlString = "Select * from Localizacion Where Estante_ID = @Estante_ID";
@@ -75,7 +68,7 @@ namespace Domain.Locations
             this.Estante_ID = id;
         }
 
-        public void ActualizarSecuencia()
+        private void ActualizarSecuencia()
         {
             this.Secuencia_Loc++;
             const string sqlString = "Update Estante Set Secuencia_Loc = @Secuencia_Loc Where Estante_ID = @Estante_ID";

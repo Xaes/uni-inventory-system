@@ -13,7 +13,7 @@ namespace Domain.Inventory
         private DateTime Fecha;
         private string TipoTransaccion;
 
-        public Movimiento() {}
+        private Movimiento() {}
         
         public Movimiento(int movimientoId, int localizacionInicialId, int localizacionFinalId,
             float costoTotal, float costoUnitario, float precioVentaUnitario,

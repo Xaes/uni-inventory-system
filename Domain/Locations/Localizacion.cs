@@ -12,14 +12,9 @@ namespace Domain.Locations
         
         public Localizacion() {}
 
-        public Localizacion(string codigo)
+        internal Localizacion(int estanteId, string codigo)
         {
-            this.Codigo = codigo;
-        }
-
-        public Localizacion(int estanteId, string codigo)
-        {
-            this.Codigo = codigo;
+            this.Codigo = codigo ?? throw new ArgumentNullException(nameof(codigo));
             this.Estante_ID = estanteId;
         }
 

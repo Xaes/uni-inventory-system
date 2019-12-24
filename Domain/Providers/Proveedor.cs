@@ -14,14 +14,13 @@ namespace Domain.Providers
 
         public Proveedor(string nombre)
         {
-            Proveedor_ID = 0;
-            this.Nombre = nombre;
+            this.Nombre = nombre ?? throw new ArgumentNullException(nameof(nombre));
         }
 
         public Proveedor(int proveedorId, string nombre)
         {
             this.Proveedor_ID = proveedorId;
-            this.Nombre = nombre;
+            this.Nombre = nombre ?? throw new ArgumentNullException(nameof(nombre));
         }
         
         public static List<Proveedor> GetProveedores()

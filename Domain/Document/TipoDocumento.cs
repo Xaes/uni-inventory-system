@@ -11,7 +11,7 @@ namespace Domain.Document
         
         public TipoDocumento() {}
         
-        public TipoDocumento(int tipoDocumentoId, string ultimoNumDoc, string nombre, bool cambiaUnidades, bool cambiaCosto)
+        private TipoDocumento(int tipoDocumentoId, string ultimoNumDoc, string nombre, bool cambiaUnidades, bool cambiaCosto)
         {
             TipoDocumento_ID = tipoDocumentoId;
             UltimoNumDoc = ultimoNumDoc ?? throw new ArgumentNullException(nameof(ultimoNumDoc));

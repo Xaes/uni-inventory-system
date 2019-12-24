@@ -46,8 +46,8 @@ namespace Domain
             var periodo2 = Periodo.AgregarPeriodo(2019, "Año 2019");
             periodo2.Abrir();
             
-            Console.WriteLine("Periodo Activo: " + Periodo.GetPeriodoActivo().ToString());
-            Console.WriteLine("Periodo Sin Usar: " + periodo1.ToString());
+            Console.WriteLine("Periodo Activo: " + Periodo.GetPeriodoActivo());
+            Console.WriteLine("Periodo Sin Usar: " + periodo1);
             Console.WriteLine(Periodo.GetPeriodos());
             
         }

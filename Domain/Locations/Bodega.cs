@@ -15,17 +15,11 @@ namespace Domain.Locations
         
         public Bodega() {}
 
-        public Bodega(string nombre, string codigo)
-        {
-            this.Nombre = nombre;
-            this.Codigo = codigo;
-        }
-
-        public Bodega(int bodegaId, string codigo, string nombre)
+        private Bodega(int bodegaId, string codigo, string nombre)
         {
             this.Bodega_ID = bodegaId;
-            this.Nombre = nombre;
-            this.Codigo = codigo;
+            this.Nombre = nombre ?? throw new ArgumentNullException(nameof(nombre));
+            this.Codigo = codigo ?? throw new ArgumentNullException(nameof(codigo));
         }
 
         public static List<Bodega> GetBodegas()
