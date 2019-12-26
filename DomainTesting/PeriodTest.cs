@@ -7,7 +7,7 @@ namespace DomainTesting
     public class PeriodTest : Setup
     {
         [Test]
-        public void ProbarPeriodos() 
+        public void CrearPeriodos() 
         {
             
             // Creando / Abriendo / Guardando un nuevos Periodos.

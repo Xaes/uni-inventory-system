@@ -8,7 +8,7 @@ namespace DomainTesting
     {
 
         [Test]
-        public void ProbarProveedores()
+        public void CrearProveedores()
         {
             
             // Creando / Guardando un nuevo Proveedor.
