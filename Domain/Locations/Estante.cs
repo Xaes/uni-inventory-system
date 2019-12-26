@@ -24,7 +24,7 @@ namespace Domain.Locations
 
         public List<Localizacion> GetLocalizaciones()
         {
-            const string sqlString = "Select * from Localizacion Where Estante_ID = @Estante_ID";
+            const string sqlString = "Select * from Localizacion Where FK_Estante_ID = @Estante_ID";
             return DbCliente.GetConexion().Query<Localizacion>(sqlString, new {Estante_ID}).ToList();
         }
 

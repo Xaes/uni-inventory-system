@@ -36,7 +36,7 @@ namespace Domain.Locations
         
         public List<Pasillo> GetPasillos()
         {
-            const string sqlString = "Select * From Pasillo Where Bodega_ID = @Bodega_ID";
+            const string sqlString = "Select * From Pasillo Where FK_Bodega_ID = @Bodega_ID";
             return DbCliente.GetConexion().Query<Pasillo>(sqlString, new {this.Bodega_ID}).ToList();
         }
         

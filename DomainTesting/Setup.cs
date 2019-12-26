@@ -30,9 +30,11 @@ namespace DomainTesting
             
             // Ejecutando el SQL.
 
+            Console.WriteLine("Limpiando DB...");
             DbCliente.GetConexion().Execute(dropScript);
+            Console.WriteLine("Restaurando DB...");
             DbCliente.GetConexion().Execute(initScript);
-            
+
         }
     }
 }

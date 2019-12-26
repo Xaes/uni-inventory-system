@@ -23,7 +23,7 @@ namespace Domain.Locations
 
         public List<Estante> GetEstantes()
         {
-            const string sqlString = "Select * from Estante Where Pasillo_ID = @Pasillo_ID";
+            const string sqlString = "Select * from Estante Where FK_Pasillo_ID = @Pasillo_ID";
             return DbCliente.GetConexion().Query<Estante>(sqlString, new { Pasillo_ID }).ToList();
         }
 

@@ -10,6 +10,7 @@
         <PackageReference Include="Microsoft.Data.SqlClient" Version="1.1.0" />
     </ItemGroup>
     <ItemGroup>
+        <Folder Include="InvException" />
         <Folder Include="Products" />
         <Folder Include="DB" />
     </ItemGroup>
