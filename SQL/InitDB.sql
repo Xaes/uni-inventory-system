@@ -7,8 +7,10 @@ IF NOT EXISTS (SELECT  * FROM sysobjects WHERE name='Bodega' and xtype='U')
     CREATE TABLE Bodega
     (
 		Bodega_ID int IDENTITY PRIMARY KEY,
-        Codigo VARCHAR(5) NOT NULL UNIQUE,
-        Nombre VARCHAR(30) NOT NULL
+        Codigo VARCHAR(5) NOT NULL,
+        Nombre VARCHAR(30) NOT NULL UNIQUE,
+
+        CONSTRAINT UK_Bodega UNIQUE (Codigo)
     );
 
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Pasillo' and xtype='U')
@@ -178,7 +180,7 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Proveedor' and xtype='U')
     CREATE TABLE Proveedor
     (
         Proveedor_ID int IDENTITY,
-        Nombre varchar(30) NOT NULL
+        Nombre varchar(30) NOT NULL UNIQUE,
 
         CONSTRAINT PK_Proveedor PRIMARY KEY NONCLUSTERED (Proveedor_ID)
     )

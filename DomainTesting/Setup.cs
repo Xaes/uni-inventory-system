@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using Dapper;
 using Domain.DB;
+using Microsoft.Data.SqlClient;
 using NUnit.Framework;
 
 namespace DomainTesting
@@ -30,11 +31,21 @@ namespace DomainTesting
             
             // Ejecutando el SQL.
 
-            Console.WriteLine("Limpiando DB...");
-            DbCliente.GetConexion().Execute(dropScript);
-            Console.WriteLine("Restaurando DB...");
-            DbCliente.GetConexion().Execute(initScript);
-
+            try
+            {
+                Console.WriteLine("Limpiando DB...");
+                DbCliente.GetConexion().Execute(dropScript);
+            }
+            catch (SqlException ex) when (ex.Number == 3701)
+            {
+                Console.WriteLine("La DB ya estaba limpia.");
+            }
+            finally
+            {
+                Console.WriteLine("Restaurando DB...");
+                DbCliente.GetConexion().Execute(initScript);
+            }
+            
         }
     }
 }
