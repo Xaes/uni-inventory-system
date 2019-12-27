@@ -59,7 +59,7 @@ namespace DomainTesting
                 {
                     pasillo.AgregarEstante("10002", 1);
                 }, "ERROR: Una excepcion InvDuplicateException deberia ser lanzada en creacion de Pasillos.");
-                Console.WriteLine("PRUEBA EXITOSA: Se evito la creacion de un duplicado de un pasillo.");
+                Console.WriteLine("PRUEBA EXITOSA: Se evito la creacion de un duplicado de un Pasillo.");
 
             });
             
