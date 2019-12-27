@@ -12,6 +12,8 @@ namespace Domain.DB
             Console.WriteLine("[INFO]: DB genero una Exception.");
             switch (ex.Number)
             {
+                case 2628:
+                    return new ArgumentOutOfRangeException("", "[DB]: Datos proporcionados exceden el limite permitido. Mensaje: " + ex.Message);
                 case 2627:
                     return new DuplicateNameException("[DB]: Datos de la entidad ya existen en la base de datos y deben ser unicos. Mensaje: " + ex.Message);
                 case 515:

@@ -82,25 +82,25 @@ namespace DomainTesting
                 // Checkear por nulidad en Nombre.
                 
                 Assert.Throws<ArgumentNullException>(() => Bodega.AgregarBodega(null, "20000"),
-                    "[ERROR]: Una excepcion InvNullParameter deberia ser lanzada en Bodega."
+                    "[ERROR]: Una excepcion ArgumentNullException deberia ser lanzada en Bodega."
                 );
 
                 // Checkear por nulidad en Codigo.
                 
                 Assert.Throws<ArgumentNullException>(() => Bodega.AgregarBodega("Bodega #2", null),
-                    "[ERROR]: Una excepcion InvNullParameter deberia ser lanzada en Bodega."
+                    "[ERROR]: Una excepcion ArgumentNullException deberia ser lanzada en Bodega."
                 );
 
                 Assert.Throws<ArgumentNullException>(() => {
                         bodega.AgregarPasillo(null);
-                    }, "[ERROR]: Una excepcion InvNullParameter deberia ser lanzada en Pasillo."
+                    }, "[ERROR]: Una excepcion ArgumentNullException deberia ser lanzada en Pasillo."
                 );
 
                 Assert.Throws<ArgumentNullException>(() =>
                     {
                         pasillo.AgregarEstante(null, 1);
                     },
-                    "[ERROR]: Una excepcion InvNullParameter deberia ser lanzada en Estante."
+                    "[ERROR]: Una excepcion ArgumentNullException deberia ser lanzada en Estante."
                 );
 
             });

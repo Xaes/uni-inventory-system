@@ -18,7 +18,7 @@ namespace Domain.Providers
         public Proveedor(int proveedorId, string nombre)
         {
             this.Proveedor_ID = proveedorId;
-            this.Nombre = nombre ?? throw new ArgumentNullException(nameof(nombre));
+            this.Nombre = nombre;
         }
         
         public static List<Proveedor> GetProveedores()

@@ -53,7 +53,7 @@ IF NOT EXISTS (SELECT  * FROM sysobjects WHERE name='MarcaRepuesto' and xtype='U
     (
         MarcaRepuesto_ID int IDENTITY,
         EsGenerica bit NOT NULL,
-        Nombre VARCHAR(30) NOT NULL
+        Nombre VARCHAR(30) NOT NULL UNIQUE,
 
         CONSTRAINT PK_MarcaRepuesto PRIMARY KEY NONCLUSTERED (MarcaRepuesto_ID)
     )
@@ -62,8 +62,8 @@ IF NOT EXISTS (SELECT  * FROM sysobjects WHERE name='Categoria' and xtype='U')
     CREATE TABLE Categoria
     (
         Categoria_ID int IDENTITY,
-        Nombre VARCHAR(30),
-        Description VARCHAR(120)
+        Nombre VARCHAR(30) UNIQUE,
+        Descripcion VARCHAR(120)
 
         CONSTRAINT PK_Categoria PRIMARY KEY NONCLUSTERED (Categoria_ID)
     )
@@ -73,8 +73,8 @@ IF NOT EXISTS (SELECT  * FROM sysobjects WHERE name='SubCategoria' and xtype='U'
     (
         SubCategoria_ID int IDENTITY,
         FK_Categoria_ID int FOREIGN KEY REFERENCES Categoria(Categoria_ID),
-        Nombre VARCHAR(30),
-        Description VARCHAR(120)
+        Nombre VARCHAR(30) UNIQUE,
+        Descripcion VARCHAR(120)
 
         CONSTRAINT PK_SubCategoria PRIMARY KEY NONCLUSTERED (SubCategoria_ID)
     )
@@ -103,7 +103,7 @@ IF NOT EXISTS (SELECT  * FROM sysobjects WHERE name='Repuesto' and xtype='U')
         CodigoRepuesto VARCHAR(30) NOT NULL,
         UnidadMedida VARCHAR(10),
         Descripcion VARCHAR(120),
-        Nombre VARCHAR(50) NOT NULL
+        Nombre VARCHAR(50) NOT NULL UNIQUE,
 
         CONSTRAINT PK_Repuesto PRIMARY KEY NONCLUSTERED (Repuesto_ID),
         CONSTRAINT UK_Repuesto UNIQUE (CodigoRepuesto, Repuesto_ID)
@@ -192,7 +192,7 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='TipoDocumento' and xtype='U'
     (
         TipoDocumento_ID int IDENTITY,
         UltimoNumDoc VARCHAR(30),
-        Nombre VARCHAR(30),
+        Nombre VARCHAR(30) UNIQUE,
         CambiaUnidades bit NOT NULL,
         CambiaCosto bit NOT NULL
 

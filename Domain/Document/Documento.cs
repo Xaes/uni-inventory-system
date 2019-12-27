@@ -1,6 +1,7 @@
 using System;
 using Dapper;
 using Domain.DB;
+using Microsoft.Data.SqlClient;
 
 namespace Domain.Document
 {
@@ -13,6 +14,8 @@ namespace Domain.Document
         private int NumeroDoc;
         private DateTime Fecha;
         
+        public Documento() {}
+        
         private Documento(int documentoId, int proveedorId, int tipoDocumentoId, int numeroDoc, DateTime fecha)
         {
             this.Documento_ID = documentoId;
@@ -24,16 +27,24 @@ namespace Domain.Document
 
         public static Documento AgregarDocumento(int proveedorId, int tipoDocumentoId, int numeroDoc, DateTime fecha)
         {
-            const string sqlString = "Insert Into Documento (FK_ProveedorID, FK_TipoDocumentoID, NumeroDoc, Fecha)" +
-                                     "Values (@proveedorId, @tipoDocumentoId, @numeroDoc, @fecha);" +
-                                     "Select Cast(SCOPE_IDENTITY() as int)";
+            try
+            {
+                const string sqlString =
+                    "Insert Into Documento (FK_ProveedorID, FK_TipoDocumentoID, NumeroDoc, Fecha)" +
+                    "Values (@proveedorId, @tipoDocumentoId, @numeroDoc, @fecha);" +
+                    "Select Cast(SCOPE_IDENTITY() as int)";
 
-            var id = (int) DbCliente.GetConexion().ExecuteScalar(
-                sqlString, 
-                new { proveedorId, tipoDocumentoId, numeroDoc, fecha }
-            );
-            
-            return new Documento(id, proveedorId, tipoDocumentoId, numeroDoc, fecha);
+                var id = (int) DbCliente.GetConexion().ExecuteScalar(
+                    sqlString,
+                    new {proveedorId, tipoDocumentoId, numeroDoc, fecha}
+                );
+
+                return new Documento(id, proveedorId, tipoDocumentoId, numeroDoc, fecha);
+            }
+            catch (SqlException ex)
+            {
+                throw SqlExceptionMapper.Map(ex);
+            }
         }
 
     }

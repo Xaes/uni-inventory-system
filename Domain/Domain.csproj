@@ -9,8 +9,5 @@
         <PackageReference Include="Dapper" Version="2.0.30" />
         <PackageReference Include="Microsoft.Data.SqlClient" Version="1.1.0" />
     </ItemGroup>
-    <ItemGroup>
-        <Folder Include="Products" />
-    </ItemGroup>
     
 </Project>

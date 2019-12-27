@@ -34,7 +34,7 @@ namespace DomainTesting
                 Assert.Throws<DuplicateNameException>(() =>
                 {
                     Proveedor.AgregarProveedor("Proveedor #1");
-                }, "[ERROR]: Una excepcion InvDuplicateException deberia ser lanzada en creacion de Proveedores.");
+                }, "[ERROR]: Una excepcion DuplicateNameException deberia ser lanzada en creacion de Proveedores.");
 
             });
         }
@@ -48,7 +48,7 @@ namespace DomainTesting
                 Assert.Throws<ArgumentNullException>(() =>
                 {
                     Proveedor.AgregarProveedor(null);
-                }, "[ERROR]: Una excepcion InvNullParameter deberia ser lanzada en Proveedor.");
+                }, "[ERROR]: Una excepcion ArgumentNullException deberia ser lanzada en Proveedor.");
 
             });
     }
