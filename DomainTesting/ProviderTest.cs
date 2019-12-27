@@ -1,7 +1,6 @@
 using System;
 using System.Data;
 using Domain.Providers;
-using Microsoft.Data.SqlClient;
 using NUnit.Framework;
 
 namespace DomainTesting
@@ -36,7 +35,6 @@ namespace DomainTesting
                 {
                     Proveedor.AgregarProveedor("Proveedor #1");
                 }, "[ERROR]: Una excepcion InvDuplicateException deberia ser lanzada en creacion de Proveedores.");
-                Console.WriteLine("[PRUEBA EXITOSA]: Se evito la creacion de un duplicado de Proveedores.");
 
             });
         }
@@ -51,8 +49,7 @@ namespace DomainTesting
                 {
                     Proveedor.AgregarProveedor(null);
                 }, "[ERROR]: Una excepcion InvNullParameter deberia ser lanzada en Proveedor.");
-                Console.WriteLine("[PRUEBA EXITOSA]: Se evito la creacion con parametros nulos en nombre de un Proveedor.");
-                
+
             });
     }
         

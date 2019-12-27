@@ -46,27 +46,23 @@ namespace DomainTesting
                 {
                     Bodega.AgregarBodega("Bodega #1", "10000");
                 }, "[ERROR]: Una excepcion DuplicateNameException deberia ser lanzada en creacion de Bodegas por codigo.");
-                Console.WriteLine("[PRUEBA EXITOSA]: Se evito la creacion de un duplicado por codigo de una Bodega.");
-                
+
                 // Checkear por Duplicidad en Nombre de Bodega.
                 
                 Assert.Throws<DuplicateNameException>(() =>
                 {
                     Bodega.AgregarBodega("Bodega #1", "10001");
                 }, "[ERROR]: Una excepcion DuplicateNameException deberia ser lanzada en creacion de Bodegas por nombre.");
-                Console.WriteLine("[PRUEBA EXITOSA]: Se evito la creacion de un duplicado por nombre de una Bodega.");
-                
+
                 Assert.Throws<DuplicateNameException>(() =>
                 {
                     bodega.AgregarPasillo("10001");
                 }, "[ERROR]: Una excepcion DuplicateNameException deberia ser lanzada en creacion de Estantes.");
-                Console.WriteLine("[PRUEBA EXITOSA]: Se evito la creacion de un duplicado de un Estante.");
 
                 Assert.Throws<DuplicateNameException>(() =>
                 {
                     pasillo.AgregarEstante("10002", 1);
                 }, "[ERROR]: Una excepcion DuplicateNameException deberia ser lanzada en creacion de Pasillos.");
-                Console.WriteLine("[PRUEBA EXITOSA]: Se evito la creacion de un duplicado de un Pasillo.");
 
             });
             
@@ -88,29 +84,25 @@ namespace DomainTesting
                 Assert.Throws<ArgumentNullException>(() => Bodega.AgregarBodega(null, "20000"),
                     "[ERROR]: Una excepcion InvNullParameter deberia ser lanzada en Bodega."
                 );
-                Console.WriteLine("[PRUEBA EXITOSA]: Se evito la creacion con parametros nulos en nombre de una Bodega.");
-                
+
                 // Checkear por nulidad en Codigo.
                 
                 Assert.Throws<ArgumentNullException>(() => Bodega.AgregarBodega("Bodega #2", null),
                     "[ERROR]: Una excepcion InvNullParameter deberia ser lanzada en Bodega."
                 );
-                Console.WriteLine("[PRUEBA EXITOSA]: Se evito la creacion con parametros nulos en codigo de una Bodega.");
-                
+
                 Assert.Throws<ArgumentNullException>(() => {
                         bodega.AgregarPasillo(null);
                     }, "[ERROR]: Una excepcion InvNullParameter deberia ser lanzada en Pasillo."
                 );
-                Console.WriteLine("[PRUEBA EXITOSA]: Se evito la creacion con parametros nulos de un Pasillo.");
-                
+
                 Assert.Throws<ArgumentNullException>(() =>
                     {
                         pasillo.AgregarEstante(null, 1);
                     },
                     "[ERROR]: Una excepcion InvNullParameter deberia ser lanzada en Estante."
                 );
-                Console.WriteLine("[PRUEBA EXITOSA]: Se evito la creacion con parametros nulos de un Estante.");
-                
+
             });
         }
         

@@ -1,7 +1,6 @@
 using System;
 using System.Data;
 using Domain.Inventory;
-using Microsoft.Data.SqlClient;
 using NUnit.Framework;
 
 namespace DomainTesting
@@ -41,15 +40,13 @@ namespace DomainTesting
                 {
                     Periodo.AgregarPeriodo(2018, "Año 2018");
                 }, "[ERROR]: Una excepcion DuplicateNameException deberia ser lanzada en creacion de Periodo por periodo.");
-                Console.WriteLine("[PRUEBA EXITOSA]: Se evito la creacion de un duplicado de un Periodo.");
-                
+
                 // Checkear Duplicidad por Nombre.
                 
                 Assert.Throws<DuplicateNameException>(() =>
                 {
                     Periodo.AgregarPeriodo(2020, "Año 2018");
                 }, "[ERROR]: Una excepcion DuplicateNameException deberia ser lanzada en creacion de Periodo por nombre.");
-                Console.WriteLine("[PRUEBA EXITOSA]: Se evito la creacion de un duplicado de un Periodo.");
                 
             });
             
@@ -81,14 +78,12 @@ namespace DomainTesting
                 {
                     periodo2.Abrir();
                 }, "[ERROR]: Una excepcion InvalidOperationException deberia ser lanzado por abrir un periodo habiendo otro ya abierto.");
-                Console.WriteLine("[PRUEBA EXITOSA]: Se evito abrir un Periodo habiendo otro ya abierto.");
-                
+
                 Assert.Throws<InvalidOperationException>(() =>
                 {
                     periodo2.Cerrar();
                 }, "[ERROR]: Una excepcion InvalidOperationException deberia ser lanzado por cerrar un periodo sin haber estado activo.");
-                Console.WriteLine("[PRUEBA EXITOSA]: Se evito cerrar un Periodo que no ha sido abierto.");
-                
+
             });
             
         }
