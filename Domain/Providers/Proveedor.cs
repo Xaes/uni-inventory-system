@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dapper;
 using Domain.DB;
+using Microsoft.Data.SqlClient;
 
 namespace Domain.Providers
 {
@@ -12,10 +13,7 @@ namespace Domain.Providers
         public int Proveedor_ID { get; }
         public string Nombre { get; }
 
-        public Proveedor(string nombre)
-        {
-            this.Nombre = nombre ?? throw new ArgumentNullException(nameof(nombre));
-        }
+        public Proveedor() {}
 
         public Proveedor(int proveedorId, string nombre)
         {
@@ -37,11 +35,20 @@ namespace Domain.Providers
 
         public static Proveedor AgregarProveedor(string nombre)
         {
-            const string sqlString = "Insert Into Proveedor (Nombre) Values (@Nombre);" +
-                                     "SELECT CAST(SCOPE_IDENTITY() as int)";
-            
-            var id = DbCliente.GetConexion().Execute(sqlString, new {nombre});
-            return new Proveedor(id, nombre);
+            try {
+                
+                if(string.IsNullOrWhiteSpace(nombre))
+                    throw new ArgumentNullException(nameof(nombre), "Nombre no puede ser nulo, estar vacio o solo contener espacios.");
+                
+                const string sqlString = "Insert Into Proveedor (Nombre) Values (@Nombre);" +
+                                         "SELECT CAST(SCOPE_IDENTITY() as int)";
+                
+                var id = DbCliente.GetConexion().Execute(sqlString, new {nombre});
+                return new Proveedor(id, nombre);
+            } catch (SqlException ex)
+            {
+                throw SqlExceptionMapper.Map(ex);
+            }
         }
 
         public override string ToString()

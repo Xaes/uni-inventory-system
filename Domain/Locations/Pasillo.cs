@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dapper;
 using Domain.DB;
+using Microsoft.Data.SqlClient;
 
 namespace Domain.Locations
 {
@@ -17,7 +18,7 @@ namespace Domain.Locations
 
         public Pasillo(string codigo, int bodega_ID)
         {
-            this.Codigo = codigo ?? throw new ArgumentNullException(nameof(codigo));
+            this.Codigo = codigo;
             this.FK_Bodega_ID = bodega_ID;
         }
 
@@ -29,9 +30,18 @@ namespace Domain.Locations
 
         public Estante AgregarEstante(string codigo, int secuenciaLoc)
         {
-            var estante = new Estante(codigo, this.Pasillo_ID, secuenciaLoc);
-            estante.Insertar();
-            return estante;
+            try {
+                
+                if(string.IsNullOrWhiteSpace(codigo))
+                    throw new ArgumentNullException(nameof(codigo), "Nombre no puede ser nulo, estar vacio o solo contener espacios.");
+                
+                var estante = new Estante(codigo, this.Pasillo_ID, secuenciaLoc);
+                estante.Insertar();
+                return estante;
+            } catch (SqlException ex)
+            {
+                throw SqlExceptionMapper.Map(ex);
+            }
         }
 
         public Bodega GetBodega()

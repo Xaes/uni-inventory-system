@@ -1,6 +1,6 @@
 using System;
+using System.Data;
 using Domain.Locations;
-using Microsoft.Data.SqlClient;
 using NUnit.Framework;
 
 namespace DomainTesting
@@ -19,7 +19,14 @@ namespace DomainTesting
         [Test]
         public void CrearLocalizaciones()
         {
-            Assert.DoesNotThrow(this.PopularLocalizaciones);
+            Assert.DoesNotThrow(() =>
+            {
+                this.PopularLocalizaciones();
+                var bodega = Bodega.FindBodega(1);
+                var pasillo = bodega.GetPasillos()[0];
+                var estante = pasillo.GetEstantes()[0];
+                var localizacion = estante.GetLocalizaciones()[0];
+            });
         }
 
         [Test]
@@ -35,31 +42,31 @@ namespace DomainTesting
                 
                 // Checkear por Duplicidad en Codigo.
                 
-                Assert.Throws<SqlException>(() =>
+                Assert.Throws<DuplicateNameException>(() =>
                 {
                     Bodega.AgregarBodega("Bodega #1", "10000");
-                }, "ERROR: Una excepcion InvDuplicateException deberia ser lanzada en creacion de Bodegas por codigo.");
-                Console.WriteLine("PRUEBA EXITOSA: Se evito la creacion de un duplicado por codigo de una Bodega.");
+                }, "[ERROR]: Una excepcion DuplicateNameException deberia ser lanzada en creacion de Bodegas por codigo.");
+                Console.WriteLine("[PRUEBA EXITOSA]: Se evito la creacion de un duplicado por codigo de una Bodega.");
                 
                 // Checkear por Duplicidad en Nombre de Bodega.
                 
-                Assert.Throws<SqlException>(() =>
+                Assert.Throws<DuplicateNameException>(() =>
                 {
                     Bodega.AgregarBodega("Bodega #1", "10001");
-                }, "ERROR: Una excepcion InvDuplicateException deberia ser lanzada en creacion de Bodegas por nombre.");
-                Console.WriteLine("PRUEBA EXITOSA: Se evito la creacion de un duplicado por nombre de una Bodega.");
+                }, "[ERROR]: Una excepcion DuplicateNameException deberia ser lanzada en creacion de Bodegas por nombre.");
+                Console.WriteLine("[PRUEBA EXITOSA]: Se evito la creacion de un duplicado por nombre de una Bodega.");
                 
-                Assert.Throws<SqlException>(() =>
+                Assert.Throws<DuplicateNameException>(() =>
                 {
                     bodega.AgregarPasillo("10001");
-                }, "ERROR: Una excepcion InvDuplicateException deberia ser lanzada en creacion de Estantes.");
-                Console.WriteLine("PRUEBA EXITOSA: Se evito la creacion de un duplicado de un Estante.");
+                }, "[ERROR]: Una excepcion DuplicateNameException deberia ser lanzada en creacion de Estantes.");
+                Console.WriteLine("[PRUEBA EXITOSA]: Se evito la creacion de un duplicado de un Estante.");
 
-                Assert.Throws<SqlException>(() =>
+                Assert.Throws<DuplicateNameException>(() =>
                 {
                     pasillo.AgregarEstante("10002", 1);
-                }, "ERROR: Una excepcion InvDuplicateException deberia ser lanzada en creacion de Pasillos.");
-                Console.WriteLine("PRUEBA EXITOSA: Se evito la creacion de un duplicado de un Pasillo.");
+                }, "[ERROR]: Una excepcion DuplicateNameException deberia ser lanzada en creacion de Pasillos.");
+                Console.WriteLine("[PRUEBA EXITOSA]: Se evito la creacion de un duplicado de un Pasillo.");
 
             });
             
@@ -72,37 +79,37 @@ namespace DomainTesting
             this.PopularLocalizaciones();
             var bodega = Bodega.FindBodega(1);
             var pasillo = bodega.GetPasillos()[0];
-            
+
             Assert.Multiple(() =>
             {
 
                 // Checkear por nulidad en Nombre.
                 
-                Assert.Catch(() => Bodega.AgregarBodega(null, "20000"),
-                    "ERROR: Una excepcion InvNullParameter deberia ser lanzada en Bodega."
+                Assert.Throws<ArgumentNullException>(() => Bodega.AgregarBodega(null, "20000"),
+                    "[ERROR]: Una excepcion InvNullParameter deberia ser lanzada en Bodega."
                 );
-                Console.WriteLine("PRUEBA EXITOSA: Se evito la creacion con parametros nulos en nombre de una Bodega.");
+                Console.WriteLine("[PRUEBA EXITOSA]: Se evito la creacion con parametros nulos en nombre de una Bodega.");
                 
                 // Checkear por nulidad en Codigo.
                 
-                Assert.Catch(() => Bodega.AgregarBodega("Bodega #2", null),
-                    "ERROR: Una excepcion InvNullParameter deberia ser lanzada en Bodega."
+                Assert.Throws<ArgumentNullException>(() => Bodega.AgregarBodega("Bodega #2", null),
+                    "[ERROR]: Una excepcion InvNullParameter deberia ser lanzada en Bodega."
                 );
-                Console.WriteLine("PRUEBA EXITOSA: Se evito la creacion con parametros nulos en codigo de una Bodega.");
+                Console.WriteLine("[PRUEBA EXITOSA]: Se evito la creacion con parametros nulos en codigo de una Bodega.");
                 
-                Assert.Catch(() => {
+                Assert.Throws<ArgumentNullException>(() => {
                         bodega.AgregarPasillo(null);
-                    }, "ERROR: Una excepcion InvNullParameter deberia ser lanzada en Pasillo."
+                    }, "[ERROR]: Una excepcion InvNullParameter deberia ser lanzada en Pasillo."
                 );
-                Console.WriteLine("PRUEBA EXITOSA: Se evito la creacion con parametros nulos de un Pasillo.");
+                Console.WriteLine("[PRUEBA EXITOSA]: Se evito la creacion con parametros nulos de un Pasillo.");
                 
-                Assert.Catch(() =>
+                Assert.Throws<ArgumentNullException>(() =>
                     {
                         pasillo.AgregarEstante(null, 1);
                     },
-                    "ERROR: Una excepcion InvNullParameter deberia ser lanzada en Estante."
+                    "[ERROR]: Una excepcion InvNullParameter deberia ser lanzada en Estante."
                 );
-                Console.WriteLine("PRUEBA EXITOSA: Se evito la creacion con parametros nulos de un Estante.");
+                Console.WriteLine("[PRUEBA EXITOSA]: Se evito la creacion con parametros nulos de un Estante.");
                 
             });
         }

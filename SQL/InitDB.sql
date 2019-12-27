@@ -128,10 +128,10 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Periodo' and xtype='U')
         FechaInicio date NOT NULL,
         FechaFinal date NOT NULL,
         Estado VARCHAR(15) NOT NULL CHECK (Estado IN('ABIERTO', 'CERRADO', 'NOUSADO')),
-        Nombre VARCHAR(20) NOT NULL
+        Nombre VARCHAR(20) NOT NULL UNIQUE,
 
         CONSTRAINT PK_Periodo PRIMARY KEY NONCLUSTERED (Periodo_Id),
-        CONSTRAINT UK_Periodo UNIQUE (Nombre, Periodo_Fiscal)
+        CONSTRAINT UK_Periodo UNIQUE (Periodo_Fiscal)
     )
 
 IF NOT EXISTS (SELECT  * FROM sysobjects WHERE name='Movimiento' and xtype='U')

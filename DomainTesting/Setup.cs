@@ -32,16 +32,16 @@ namespace DomainTesting
 
             try
             {
-                Console.WriteLine("Limpiando DB...");
+                Console.WriteLine("[SETUP]: Limpiando DB...");
                 DbCliente.GetConexion().Execute(dropScript);
             }
             catch (SqlException ex) when (ex.Number == 3701)
             {
-                Console.WriteLine("La DB ya estaba limpia.");
+                Console.WriteLine("[SETUP]: La DB ya estaba limpia.");
             }
             finally
             {
-                Console.WriteLine("Restaurando DB...");
+                Console.WriteLine("[SETUP]: Restaurando DB...");
                 DbCliente.GetConexion().Execute(initScript);
             }
             

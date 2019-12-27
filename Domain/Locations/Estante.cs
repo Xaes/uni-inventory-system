@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dapper;
 using Domain.DB;
+using Microsoft.Data.SqlClient;
 
 namespace Domain.Locations
 {
@@ -17,9 +18,14 @@ namespace Domain.Locations
 
         internal Estante(string codigo, int pasilloId, int secuenciaLoc)
         {
-            this.Codigo = codigo ?? throw new ArgumentNullException(nameof(codigo));
+            
+            if(string.IsNullOrWhiteSpace(codigo))
+                throw new ArgumentNullException(nameof(codigo), "Nombre no puede ser nulo, estar vacio o solo contener espacios.");
+            
+            this.Codigo = codigo;
             this.FK_Pasillo_ID = pasilloId;
             this.Secuencia_Loc = secuenciaLoc;
+            
         }
 
         public List<Localizacion> GetLocalizaciones()
@@ -36,20 +42,22 @@ namespace Domain.Locations
 
         public Localizacion AgregarLocalizacion()
         {
-            
-            // Creando Localizacion con codigo generado.
-            
-            var localizacion = new Localizacion(this.Estante_ID, this.GenerarCodigo());
-            
-            // Actualizando Secuencia Loc.
-            
-            this.ActualizarSecuencia();
+            try {
+                
+                // Creando Localizacion con codigo generado.
+                var localizacion = new Localizacion(this.Estante_ID, this.GenerarCodigo());
+                
+                // Actualizando Secuencia Loc.
+                this.ActualizarSecuencia();
 
-            // Guardando Localizacion.
-
-            localizacion.Insertar();
-            return localizacion;
-            
+                // Guardando Localizacion.
+                localizacion.Insertar();
+                return localizacion;
+                
+            } catch (SqlException ex)
+            {
+                throw SqlExceptionMapper.Map(ex);
+            }
         }
 
         public string GenerarCodigo()

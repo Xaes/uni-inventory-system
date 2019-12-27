@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using Domain.Inventory;
 using Microsoft.Data.SqlClient;
 using NUnit.Framework;
@@ -17,7 +18,13 @@ namespace DomainTesting
         [Test]
         public void CrearPeriodos() 
         {
-            Assert.DoesNotThrow(this.PopularPeriodos);
+            Assert.DoesNotThrow(() =>
+            {
+                this.PopularPeriodos();
+                Periodo.GetPeriodos();
+                Periodo.GetPeriodoActivo();
+                Periodo.FindByPeriodoFiscal(1);
+            });
         }
 
         [Test]
@@ -30,19 +37,19 @@ namespace DomainTesting
                 
                 // Checkear Duplicidad por Periodo.
                 
-                Assert.Throws<SqlException>(() =>
+                Assert.Throws<DuplicateNameException>(() =>
                 {
                     Periodo.AgregarPeriodo(2018, "Año 2018");
-                }, "ERROR: Una excepcion InvDuplicateException deberia ser lanzada en creacion de Periodo por periodo.");
-                Console.WriteLine("PRUEBA EXITOSA: Se evito la creacion de un duplicado de un Periodo.");
+                }, "[ERROR]: Una excepcion DuplicateNameException deberia ser lanzada en creacion de Periodo por periodo.");
+                Console.WriteLine("[PRUEBA EXITOSA]: Se evito la creacion de un duplicado de un Periodo.");
                 
                 // Checkear Duplicidad por Nombre.
                 
-                Assert.Throws<SqlException>(() =>
+                Assert.Throws<DuplicateNameException>(() =>
                 {
                     Periodo.AgregarPeriodo(2020, "Año 2018");
-                }, "ERROR: Una excepcion InvDuplicateException deberia ser lanzada en creacion de Periodo por nombre.");
-                Console.WriteLine("PRUEBA EXITOSA: Se evito la creacion de un duplicado de un Periodo.");
+                }, "[ERROR]: Una excepcion DuplicateNameException deberia ser lanzada en creacion de Periodo por nombre.");
+                Console.WriteLine("[PRUEBA EXITOSA]: Se evito la creacion de un duplicado de un Periodo.");
                 
             });
             
@@ -51,10 +58,10 @@ namespace DomainTesting
         [Test]
         public void CrearPeriodosParametrosNulos()
         {
-            Assert.Throws<SqlException>(() =>
+            Assert.Throws<ArgumentNullException>(() =>
             {
                 Periodo.AgregarPeriodo(2021, null);
-            }, "ERROR: Una excepcion InvNullParameter deberia ser lanzada en creacion de Periodo por nombre.");
+            }, "[ERROR]: Una excepcion ArgumentNullException deberia ser lanzada en creacion de Periodo por nombre.");
         }
 
         [Test]
@@ -70,17 +77,17 @@ namespace DomainTesting
                 
                 Assert.DoesNotThrow(periodo1.Abrir);
                 
-                Assert.Throws<SqlException>(() =>
+                Assert.Throws<InvalidOperationException>(() =>
                 {
                     periodo2.Abrir();
-                }, "ERROR: Una excepcion InvInvalidOperation deberia ser lanzado por abrir un periodo habiendo otro ya abierto.");
-                Console.WriteLine("PRUEBA EXITOSA: Se evito abrir un Periodo habiendo otro ya abierto.");
+                }, "[ERROR]: Una excepcion InvalidOperationException deberia ser lanzado por abrir un periodo habiendo otro ya abierto.");
+                Console.WriteLine("[PRUEBA EXITOSA]: Se evito abrir un Periodo habiendo otro ya abierto.");
                 
-                Assert.Throws<SqlException>(() =>
+                Assert.Throws<InvalidOperationException>(() =>
                 {
                     periodo2.Cerrar();
-                }, "ERROR: Una excepcion InvInvalidOperation deberia ser lanzado por cerrar un periodo sin haber estado activo.");
-                Console.WriteLine("PRUEBA EXITOSA: Se evito cerrar un Periodo que no ha sido abierto.");
+                }, "[ERROR]: Una excepcion InvalidOperationException deberia ser lanzado por cerrar un periodo sin haber estado activo.");
+                Console.WriteLine("[PRUEBA EXITOSA]: Se evito cerrar un Periodo que no ha sido abierto.");
                 
             });
             

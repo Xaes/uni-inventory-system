@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dapper;
 using Domain.DB;
+using Microsoft.Data.SqlClient;
 
 namespace Domain.Locations
 {
@@ -18,8 +19,8 @@ namespace Domain.Locations
         private Bodega(int bodegaId, string codigo, string nombre)
         {
             this.Bodega_ID = bodegaId;
-            this.Nombre = nombre ?? throw new ArgumentNullException(nameof(nombre));
-            this.Codigo = codigo ?? throw new ArgumentNullException(nameof(codigo));
+            this.Nombre = nombre;
+            this.Codigo = codigo;
         }
 
         public static List<Bodega> GetBodegas()
@@ -42,18 +43,39 @@ namespace Domain.Locations
         
         public Pasillo AgregarPasillo(string codigo)
         {
-            var pasillo = new Pasillo(codigo, this.Bodega_ID);
-            pasillo.Insertar();
-            return pasillo;
+            try {
+                
+                if(string.IsNullOrWhiteSpace(codigo))
+                    throw new ArgumentNullException(nameof(codigo), "Codigo no puede ser nulo, estar vacio o solo contener espacios.");
+                
+                var pasillo = new Pasillo(codigo, this.Bodega_ID);
+                pasillo.Insertar();
+                return pasillo;
+            } catch (SqlException ex)
+            {
+                throw SqlExceptionMapper.Map(ex);
+            }
         }
 
         public static Bodega AgregarBodega(string nombre, string codigo)
         {
-            const string sqlString = "Insert Into Bodega (Codigo, Nombre) Values (@Codigo, @Nombre);" +
-                                     "Select Cast(SCOPE_IDENTITY() as int)";
+            try {
+                
+                if(string.IsNullOrWhiteSpace(codigo))
+                    throw new ArgumentNullException(nameof(codigo), "Codigo no puede ser nulo, estar vacio o solo contener espacios.");
+            
+                if(string.IsNullOrWhiteSpace(nombre))
+                    throw new ArgumentNullException(nameof(nombre), "Nombre no puede ser nulo, estar vacio o solo contener espacios.");
+                
+                const string sqlString = "Insert Into Bodega (Codigo, Nombre) Values (@Codigo, @Nombre);" +
+                                         "Select Cast(SCOPE_IDENTITY() as int)";
 
-            var id = (int) DbCliente.GetConexion().ExecuteScalar(sqlString, new { nombre, codigo });
-            return new Bodega(id, codigo, nombre);
+                var id = (int) DbCliente.GetConexion().ExecuteScalar(sqlString, new { nombre, codigo });
+                return new Bodega(id, codigo, nombre);
+            } catch (SqlException ex)
+            {
+                throw SqlExceptionMapper.Map(ex);
+            }
         }
 
         public override string ToString()

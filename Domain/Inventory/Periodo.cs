@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using Dapper;
 using Domain.DB;
+using Microsoft.Data.SqlClient;
 
 namespace Domain.Inventory
 {
@@ -38,7 +40,10 @@ namespace Domain.Inventory
         {
 
             if(FindByPeriodoFiscal(periodoFiscal) != null)
-                throw new ArgumentException("Periodo Fiscal ya existe.");
+                throw new DuplicateNameException("Periodo Fiscal ya existe.");
+
+            if (string.IsNullOrEmpty(nombre) && string.IsNullOrWhiteSpace(nombre))
+                throw new ArgumentNullException(nameof(nombre),"Nombre no puede ser nulo, estar vacio o solo contener espacios.");
             
             var fechaInicio = new DateTime(periodoFiscal, 1, 1);
             var fechaFinal = new DateTime(periodoFiscal, 12, 31);
@@ -48,13 +53,19 @@ namespace Domain.Inventory
                                      "Values (@periodoFiscal, @nombre, @fechaInicio, @fechaFinal, @estadoString);" +
                                      "Select Cast(SCOPE_IDENTITY() as int)";
 
-            var id = (int) DbCliente.GetConexion().ExecuteScalar(
-                sqlString,
-                new { periodoFiscal, nombre, fechaInicio, fechaFinal, estadoString }
-            );
-
-            return new Periodo(id, nombre, periodoFiscal, fechaInicio, fechaFinal, PeriodoEstado.NOUSADO);
-
+            try
+            {
+                var id = (int) DbCliente.GetConexion().ExecuteScalar(
+                    sqlString,
+                    new {periodoFiscal, nombre, fechaInicio, fechaFinal, estadoString}
+                );
+                return new Periodo(id, nombre, periodoFiscal, fechaInicio, fechaFinal, PeriodoEstado.NOUSADO);
+            }
+            catch (SqlException ex)
+            {
+                throw SqlExceptionMapper.Map(ex);
+            }
+            
         }
 
         public static Periodo GetPeriodo(int periodoFiscal)
@@ -85,9 +96,9 @@ namespace Domain.Inventory
         public void Abrir()
         {
             if (GetPeriodoActivo() != null)
-                throw new ArgumentException("Ya existe un periodo fiscal activo. Abrir otro no es posible.");
+                throw new InvalidOperationException("Ya existe un periodo fiscal activo. Abrir otro no es posible.");
             if (this.Estado != PeriodoEstado.NOUSADO)
-                throw new ArgumentException("Solo se pueden abrir periodos sin usar.");
+                throw new InvalidOperationException("Solo se pueden abrir periodos sin usar.");
             
             this.CambiarEstado(PeriodoEstado.ABIERTO);
         }
@@ -95,7 +106,7 @@ namespace Domain.Inventory
         public void Cerrar()
         {
             if (this.Estado != PeriodoEstado.ABIERTO)
-                throw new ArgumentException("Solo se puede cerrar un periodo abierto.");
+                throw new InvalidOperationException("Solo se puede cerrar un periodo abierto.");
             this.CambiarEstado(PeriodoEstado.CERRADO);
         }
 
