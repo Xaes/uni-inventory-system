@@ -9,7 +9,7 @@ namespace Domain.Locations
     {
 
         public string Codigo { get; }
-        private int FK_Estante_ID { get; }
+        public int FK_Estante_ID { get; }
         
         public Localizacion() {}
 

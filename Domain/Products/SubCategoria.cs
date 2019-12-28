@@ -3,9 +3,9 @@ namespace Domain.Products
     public class SubCategoria
     {
         
-        private int SubCategoria_ID { get; }
-        private int FK_Categoria_ID { get; }
-        private string Nombre, Descripcion;
+        public int SubCategoria_ID { get; }
+        public int FK_Categoria_ID { get; }
+        public string Nombre, Descripcion;
         
         public SubCategoria() {}
 

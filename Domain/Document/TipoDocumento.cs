@@ -12,8 +12,8 @@ namespace Domain.Document
 
         public int TipoDocumento_ID { get; private set; }
         private int UltimoNumDoc;
-        private string Nombre;
-        private readonly bool CambiaUnidades, CambiaCosto;
+        public string Nombre;
+        public readonly bool CambiaUnidades, CambiaCosto;
         
         public TipoDocumento() {}
         

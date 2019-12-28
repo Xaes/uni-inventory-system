@@ -9,8 +9,8 @@ namespace Domain.Locations
 {
     public class Estante
     {
-        private int Estante_ID { get; set; }
-        private int FK_Pasillo_ID { get; }
+        public int Estante_ID { get; set; }
+        public int FK_Pasillo_ID { get; }
         private int Secuencia_Loc { get; set; }
         public string Codigo { get; }
         

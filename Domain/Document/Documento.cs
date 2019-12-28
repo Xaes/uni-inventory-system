@@ -11,9 +11,9 @@ namespace Domain.Document
     {
 
         public int Documento_ID { get; }
-        private int TipoDocumento_ID, NumeroDoc;
-        private int? Proveedor_ID;
-        private DateTime Fecha;
+        public int TipoDocumento_ID, NumeroDoc;
+        public int? Proveedor_ID;
+        public DateTime Fecha;
         
         public Documento() {}
         

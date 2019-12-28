@@ -96,7 +96,6 @@ IF NOT EXISTS (SELECT  * FROM sysobjects WHERE name='Repuesto' and xtype='U')
         Repuesto_ID int IDENTITY,
         FK_MarcaRepuesto_ID int FOREIGN KEY REFERENCES MarcaRepuesto(MarcaRepuesto_ID),
         FK_SubCategoria_ID int FOREIGN KEY REFERENCES SubCategoria(SubCategoria_ID),
-        NumeroParteCompatible int NOT NULL,
         NumeroParte int NOT NULL,
         UnidadesPorPaquete int,
         UnidadesEmpaque int,
@@ -106,7 +105,7 @@ IF NOT EXISTS (SELECT  * FROM sysobjects WHERE name='Repuesto' and xtype='U')
         Nombre VARCHAR(50) NOT NULL UNIQUE,
 
         CONSTRAINT PK_Repuesto PRIMARY KEY NONCLUSTERED (Repuesto_ID),
-        CONSTRAINT UK_Repuesto UNIQUE (CodigoRepuesto, Repuesto_ID)
+        CONSTRAINT UK_Repuesto UNIQUE (CodigoRepuesto)
     )
 
 IF NOT EXISTS (SELECT  * FROM sysobjects WHERE name='RepuestoCompatibilidad' and xtype='U')

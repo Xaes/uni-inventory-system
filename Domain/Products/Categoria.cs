@@ -10,8 +10,8 @@ namespace Domain.Products
     public class Categoria
     {
         
-        private int Categoria_ID { get; }
-        private string Nombre, Descripcion;
+        public int Categoria_ID { get; }
+        public string Nombre, Descripcion;
         
         public Categoria() {}
 

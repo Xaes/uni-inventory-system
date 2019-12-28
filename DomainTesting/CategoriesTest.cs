@@ -8,7 +8,7 @@ namespace DomainTesting
     public class CategoriesTest : Setup
     {
 
-        public void PopulateCategorias()
+        public static void PopulateCategorias()
         {
             var categoria = Categoria.AgregarCategoria("Llantas", "Descripcion de Llantas.");
             categoria.AgregarSubCategoria("Llantas de Invierno", "Descripcion de Llantas de Invierno");
@@ -19,7 +19,7 @@ namespace DomainTesting
         {
             Assert.DoesNotThrow(() =>
             {
-                this.PopulateCategorias();
+                PopulateCategorias();
                 var categoria = Categoria.GetCategoria(1);
                 categoria.GetSubCategorias();
             });
@@ -29,7 +29,7 @@ namespace DomainTesting
         public void DuplicarCategorias()
         {
             
-            this.PopulateCategorias();
+            PopulateCategorias();
             var categoria = Categoria.GetCategoria(1);
             Assert.Multiple(() =>
             {
@@ -50,7 +50,7 @@ namespace DomainTesting
         public void CrearCategoriasParametrosNulos()
         {
             
-            this.PopulateCategorias();
+            PopulateCategorias();
             var categoria = Categoria.GetCategoria(1);
             Assert.Multiple(() =>
             {
@@ -71,7 +71,7 @@ namespace DomainTesting
         public void CrearCategoriasParametrosFueraRango()
         {
             
-            this.PopulateCategorias();
+            PopulateCategorias();
             var categoria = Categoria.GetCategoria(1);
             
             Assert.Throws<ArgumentOutOfRangeException>(

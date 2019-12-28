@@ -8,7 +8,7 @@ namespace DomainTesting
     public class BrandTest : Setup
     {
 
-        public void PopularMarcas()
+        public static void PopularMarcas()
         {
             MarcaRepuesto.AgregarMarca("Toyota", false);
             MarcaRepuesto.AgregarMarca("Hyundai", true);
@@ -18,8 +18,8 @@ namespace DomainTesting
         public void CrearMarcas()
         {
             Assert.DoesNotThrow(() =>
-            {
-                this.PopularMarcas();
+            { 
+                PopularMarcas();
                 MarcaRepuesto.GetMarca(1);
                 MarcaRepuesto.GetMarcas();
             });
@@ -28,7 +28,7 @@ namespace DomainTesting
         [Test]
         public void DuplicarMarcas()
         {
-            this.PopularMarcas();
+            PopularMarcas();
             Assert.Throws<DuplicateNameException>(
                 () => MarcaRepuesto.AgregarMarca("Toyota", false),
                 "[ERROR]: Una excepcion DuplicateNameException deberia ser lanzada en creacion de MarcaRepuesto."

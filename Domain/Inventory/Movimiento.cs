@@ -17,14 +17,14 @@ namespace Domain.Inventory
     public class Movimiento
     {
         
-        private int Movimiento_ID;
-        private string FK_LocalizacionInicial_ID;
-        private string FK_LocalizacionFinal_ID;
-        private int FK_Periodo_ID;
-        private float? CostoTotal, CostoUnitario, PrecioVentaUnitario;
-        private int Unidades;
-        private DateTime Fecha;
-        private TipoTransaccion Transaccion;
+        public int Movimiento_ID;
+        public string FK_LocalizacionInicial_ID;
+        public string FK_LocalizacionFinal_ID;
+        public int FK_Periodo_ID;
+        public float? CostoTotal, CostoUnitario, PrecioVentaUnitario;
+        public int Unidades;
+        public DateTime Fecha;
+        public TipoTransaccion Transaccion;
 
         private Movimiento() {}
 

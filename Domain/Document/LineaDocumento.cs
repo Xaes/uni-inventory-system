@@ -7,10 +7,10 @@ namespace Domain.Document
     public class LineaDocumento
     {
 
-        private int LineaDocumentoID, FK_DocumentoID, FK_MovimientoID, FK_RepuestoID, FK_BodegaID;
-        private int Unidades;
-        private int? UnidadesNoRecibidas, UnidadesDanadas, CantidadPaquetes;
-        private float? CostoUnitario, PrecioVentaUnitario;
+        public int LineaDocumentoID, FK_DocumentoID, FK_MovimientoID, FK_RepuestoID, FK_BodegaID;
+        public int Unidades;
+        public int? UnidadesNoRecibidas, UnidadesDanadas, CantidadPaquetes;
+        public float? CostoUnitario, PrecioVentaUnitario;
         
         public LineaDocumento() {}
         

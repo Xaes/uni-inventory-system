@@ -11,8 +11,8 @@ namespace Domain.Products
     {
         
         public int MarcaRepuesto_ID { get; }
-        private bool EsGenerica;
-        private string Nombre;
+        public bool EsGenerica;
+        public string Nombre;
         
         public MarcaRepuesto() {}
 

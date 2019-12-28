@@ -14,7 +14,7 @@ namespace DomainTesting
             MovementTest.PopularMovimientos();
             var tipoDocumento = TipoDocumento.AgregarTipo(1, "Entrada por Compra", true, true);
             var documento = Documento.AgregarDocumento(null, tipoDocumento.TipoDocumento_ID, 10, DateTime.Now);
-            //var linea = LineaDocumento.AgregarLinea(documento.Documento_ID, Movimiento.GetMovimiento(1))
+            //var linea = LineaDocumento.AgregarLinea(documento.Documento_ID, Movimiento.GetMovimiento(1), );
         }
 
         [Test]
