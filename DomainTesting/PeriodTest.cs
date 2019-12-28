@@ -8,7 +8,7 @@ namespace DomainTesting
     public class PeriodTest : Setup
     {
 
-        public void PopularPeriodos()
+        public static void PopularPeriodos()
         {
             Periodo.AgregarPeriodo(2018, "Año 2018");
             Periodo.AgregarPeriodo(2019, "Año 2019");
@@ -19,7 +19,7 @@ namespace DomainTesting
         {
             Assert.DoesNotThrow(() =>
             {
-                this.PopularPeriodos();
+                PopularPeriodos();
                 Periodo.GetPeriodos();
                 Periodo.GetPeriodoActivo();
                 Periodo.FindByPeriodoFiscal(1);
@@ -30,7 +30,7 @@ namespace DomainTesting
         public void DuplicarPeriodos()
         {
             
-            this.PopularPeriodos();
+            PopularPeriodos();
             Assert.Multiple(() =>
             {
                 
@@ -65,7 +65,7 @@ namespace DomainTesting
         public void CambiarEstadoPeriodos()
         {
             
-            this.PopularPeriodos();
+            PopularPeriodos();
             var periodo1 = Periodo.FindByPeriodoFiscal(2018);
             var periodo2 = Periodo.FindByPeriodoFiscal(2019);
             

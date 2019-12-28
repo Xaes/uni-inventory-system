@@ -8,7 +8,7 @@ namespace Domain.Locations
     public class Localizacion
     {
 
-        private string Codigo { get; }
+        public string Codigo { get; }
         private int FK_Estante_ID { get; }
         
         public Localizacion() {}

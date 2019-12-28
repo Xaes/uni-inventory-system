@@ -8,7 +8,7 @@ namespace DomainTesting
     public class LocationTests : Setup
     {
 
-        public void PopularLocalizaciones()
+        public static void PopularLocalizaciones()
         {
             var bodega = Bodega.AgregarBodega("Bodega #1", "10000");
             var pasillo = bodega.AgregarPasillo("10001");
@@ -21,7 +21,7 @@ namespace DomainTesting
         {
             Assert.DoesNotThrow(() =>
             {
-                this.PopularLocalizaciones();
+                PopularLocalizaciones();
                 var bodega = Bodega.FindBodega(1);
                 var pasillo = bodega.GetPasillos()[0];
                 var estante = pasillo.GetEstantes()[0];
@@ -33,7 +33,7 @@ namespace DomainTesting
         public void DuplicarLocalizaciones()
         {
             
-            this.PopularLocalizaciones();
+            PopularLocalizaciones();
             var bodega = Bodega.FindBodega(1);
             var pasillo = bodega.GetPasillos()[0];
 
@@ -72,7 +72,7 @@ namespace DomainTesting
         public void CrearLocalizacionParametrosNulos()
         {
             
-            this.PopularLocalizaciones();
+            PopularLocalizaciones();
             var bodega = Bodega.FindBodega(1);
             var pasillo = bodega.GetPasillos()[0];
 

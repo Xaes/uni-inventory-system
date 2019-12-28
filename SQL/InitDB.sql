@@ -141,12 +141,12 @@ IF NOT EXISTS (SELECT  * FROM sysobjects WHERE name='Movimiento' and xtype='U')
         FK_LocalizacionInicial_ID VARCHAR(25) FOREIGN KEY REFERENCES Localizacion(Codigo),
         FK_LocalizacionFinal_ID VARCHAR(25) FOREIGN KEY REFERENCES Localizacion(Codigo),
         FK_Periodo_ID int FOREIGN KEY REFERENCES Periodo(Periodo_Id),
-        CostoTotal numeric(12, 2) NOT NULL,
-        CostoUnitario numeric(12, 2) NOT NULL,
-        PrecioVentaUnitario numeric(12, 2) NOT NULL,
+        CostoTotal numeric(12, 2),
+        CostoUnitario numeric(12, 2),
+        PrecioVentaUnitario numeric(12, 2),
         Unidades int NOT NULL,
         Fecha datetime NOT NULL,
-        TipoTransaccion VARCHAR(20) NOT NULL
+        TipoTransaccion VARCHAR(20) NOT NULL CHECK (TipoTransaccion IN('ENTRADA', 'SALIDA')),
 
         CONSTRAINT PK_Movimiento PRIMARY KEY NONCLUSTERED (Movimiento_ID)
     )
@@ -191,7 +191,7 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='TipoDocumento' and xtype='U'
     CREATE TABLE TipoDocumento
     (
         TipoDocumento_ID int IDENTITY,
-        UltimoNumDoc VARCHAR(30),
+        UltimoNumDoc int,
         Nombre VARCHAR(30) UNIQUE,
         CambiaUnidades bit NOT NULL,
         CambiaCosto bit NOT NULL
@@ -206,9 +206,10 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Documento' and xtype='U')
         FK_ProveedorID int FOREIGN KEY REFERENCES Proveedor(Proveedor_ID),
         FK_TipoDocumentoID int NOT NULL FOREIGN KEY REFERENCES TipoDocumento(TipoDocumento_ID),
         NumeroDoc int NOT NULL,
-        Fecha datetime NOT NULL
+        Fecha datetime NOT NULL,
 
-        CONSTRAINT PK_Documento PRIMARY KEY NONCLUSTERED (Documento_ID)
+        CONSTRAINT PK_Documento PRIMARY KEY NONCLUSTERED (Documento_ID),
+        CONSTRAINT UK_DOCUMENTO UNIQUE (FK_TipoDocumentoID, NumeroDoc)
     )
 
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='LineaDocumento' and xtype='U')

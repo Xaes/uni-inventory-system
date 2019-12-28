@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Dapper;
 using Domain.DB;
 using Microsoft.Data.SqlClient;
@@ -8,13 +10,14 @@ namespace Domain.Document
     public class TipoDocumento
     {
 
-        private int TipoDocumento_ID;
-        private string UltimoNumDoc, Nombre;
+        public int TipoDocumento_ID { get; private set; }
+        private int UltimoNumDoc;
+        private string Nombre;
         private readonly bool CambiaUnidades, CambiaCosto;
         
         public TipoDocumento() {}
         
-        private TipoDocumento(int tipoDocumentoId, string ultimoNumDoc, string nombre, bool cambiaUnidades, bool cambiaCosto)
+        private TipoDocumento(int tipoDocumentoId, int ultimoNumDoc, string nombre, bool cambiaUnidades, bool cambiaCosto)
         {
             this.TipoDocumento_ID = tipoDocumentoId;
             this.UltimoNumDoc = ultimoNumDoc;
@@ -23,25 +26,22 @@ namespace Domain.Document
             this.CambiaCosto = cambiaCosto;
         }
 
-        public TipoDocumento AgregarTipo(string ultimoNumDoc, string nombre, bool cambiaUnidades, bool cambiaCosto)
+        public static TipoDocumento AgregarTipo(int ultimoNumDoc, string nombre, bool cambiaUnidades, bool cambiaCosto)
         {
-            
-            if(string.IsNullOrWhiteSpace(ultimoNumDoc))
-                throw new ArgumentNullException(nameof(ultimoNumDoc), "UltimoNumDoc no puede ser nulo, estar vacio o solo contener espacios.");
-            
+
             if(string.IsNullOrWhiteSpace(nombre))
                 throw new ArgumentNullException(nameof(nombre), "Nombre no puede ser nulo, estar vacio o solo contener espacios.");
             
             try
             {
                 const string sqlString =
-                    "Insert Into TipoDocumento (UltimoNumDoc, Nombre, CambiaUnidades, CambiaCost)" +
+                    "Insert Into TipoDocumento (UltimoNumDoc, Nombre, CambiaUnidades, CambiaCosto)" +
                     "Values (@ultimoNumDoc, @nombre, @cambiaUnidades, @cambiaCosto);" +
                     "Select Cast(SCOPE_IDENTITY() as int)";
 
                 var id = (int) DbCliente.GetConexion().ExecuteScalar(
                     sqlString,
-                    new {ultimoNumDoc, nombre, CambiaUnidades, CambiaCosto}
+                    new {ultimoNumDoc, nombre, cambiaUnidades, cambiaCosto}
                 );
 
                 return new TipoDocumento(id, ultimoNumDoc, nombre, cambiaUnidades, cambiaCosto);
@@ -52,5 +52,24 @@ namespace Domain.Document
             }
             
         }
+        
+        public static TipoDocumento GetTipoDocumento(int tipoDocumentoId)
+        {
+            const string sqlString = "Select * From TipoDocumento Where TipoDocumento_ID = @tipoDocumentoId";
+            return DbCliente.GetConexion().QueryFirstOrDefault<TipoDocumento>(sqlString, new {tipoDocumentoId});
+        }
+
+        public static List<TipoDocumento> GetTipoDocumentos()
+        {
+            const string sqlString = "Select * From TipoDocumento";
+            return DbCliente.GetConexion().Query<TipoDocumento>(sqlString).ToList();
+        }
+
+        public override string ToString()
+        {
+            return $"Tipo Documento: [ID: {TipoDocumento_ID} / Ultimo No. Doc: {UltimoNumDoc} / " +
+                   $"Nombre: {Nombre} / Cambia Unidades: {CambiaUnidades} / Cambia Costo: {CambiaCosto}]";
+        }
+        
     }
 }
