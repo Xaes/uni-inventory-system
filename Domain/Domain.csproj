@@ -2,7 +2,11 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
-        <LangVersion>7.3</LangVersion>
+        <LangVersion>8</LangVersion>
+        <Title>Inventory System Domains</Title>
+        <Authors>Diego Balmaceda</Authors>
+        <PackageProjectUrl>https://gitlab.com/xaesdesign/inventory-system</PackageProjectUrl>
+        <RepositoryUrl>https://gitlab.com/xaesdesign/inventory-system</RepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>

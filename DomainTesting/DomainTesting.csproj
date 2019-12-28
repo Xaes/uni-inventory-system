@@ -3,7 +3,15 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
 
-        <IsPackable>false</IsPackable>
+        <IsPackable>true</IsPackable>
+
+        <Title>Testing Program for Inventory System Domains</Title>
+
+        <Authors>Diego Balmaceda</Authors>
+
+        <PackageProjectUrl>https://gitlab.com/xaesdesign/inventory-system</PackageProjectUrl>
+
+        <RepositoryUrl>https://gitlab.com/xaesdesign/inventory-system</RepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>

@@ -9,17 +9,17 @@ namespace DomainTesting
 {
     public class Setup
     {
-        
-        private const string HOST = "localhost";
-        private const string DBNAME = "inventorydb";
-        private const string USER = "sa";
-        private const string PASSWORD = "Password123!";
-        
+
         [SetUp]
         public void TestSetup()
         {
             
-            DbCliente.Init(HOST, DBNAME, USER, PASSWORD);
+            DbCliente.Init(
+                Environment.GetEnvironmentVariable("host"),
+                Environment.GetEnvironmentVariable("dbName"),
+                Environment.GetEnvironmentVariable("user"),
+                Environment.GetEnvironmentVariable("password")
+            );
             
             // Borrando / Reescribiendo todas las tablas en DB.
             
