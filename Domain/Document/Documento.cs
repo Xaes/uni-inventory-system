@@ -48,7 +48,7 @@ namespace Domain.Document
             }
         }
         
-        public static Documento GetDocumento(int documentoId)
+        public static Documento FindDocumento(int documentoId)
         {
             const string sqlString = "Select * From Documento Where Documento_ID = @documentoId";
             return DbCliente.GetConexion().QueryFirstOrDefault<Documento>(sqlString, new {documentoId});

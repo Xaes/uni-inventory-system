@@ -20,7 +20,7 @@ namespace DomainTesting
             Assert.DoesNotThrow(() =>
             { 
                 PopularMarcas();
-                MarcaRepuesto.GetMarca(1);
+                MarcaRepuesto.FindMarca(1);
                 MarcaRepuesto.GetMarcas();
             });
         }

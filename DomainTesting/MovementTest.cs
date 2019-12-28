@@ -24,7 +24,7 @@ namespace DomainTesting
             estante.AgregarLocalizacion();
             var loc1 = estante.GetLocalizaciones()[0];
             var loc2 = estante.GetLocalizaciones()[1];
-            var periodo = Periodo.GetPeriodo(2018);
+            var periodo = Periodo.FindPeriodo(2018);
 
             Movimiento.AgregarMovimiento(loc1.Codigo, loc2.Codigo, periodo.Periodo_ID,
                 1000, 100, null, 10, DateTime.Now,
@@ -38,7 +38,7 @@ namespace DomainTesting
             Assert.DoesNotThrow(() =>
             {
                 PopularMovimientos();
-                Movimiento.GetMovimiento(1);
+                Movimiento.FindMovimiento(1);
                 Movimiento.GetMovimientos(); 
             });
         }
@@ -50,7 +50,7 @@ namespace DomainTesting
             Assert.Throws<ArgumentNullException>(() =>
             {
                 Movimiento.AgregarMovimiento(null, null,
-                    Periodo.GetPeriodo(2018).Periodo_ID, 1000, 100, null,
+                    Periodo.FindPeriodo(2018).Periodo_ID, 1000, 100, null,
                     10, DateTime.Now, TipoTransaccion.SALIDA);
             });
         }

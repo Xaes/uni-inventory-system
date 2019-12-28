@@ -71,7 +71,7 @@ namespace Domain.Products
             }
         }
 
-        public static Repuesto GetRepuesto(int repuestoId)
+        public static Repuesto FindRepuesto(int repuestoId)
         {
             const string sqlString = "Select * From Repuesto Where Repuesto_ID = @repuestoId";
             return DbCliente.GetConexion().QueryFirstOrDefault<Repuesto>(sqlString, new {repuestoId});

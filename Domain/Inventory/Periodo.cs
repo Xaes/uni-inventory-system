@@ -68,7 +68,7 @@ namespace Domain.Inventory
             
         }
 
-        public static Periodo GetPeriodo(int periodoFiscal)
+        public static Periodo FindPeriodo(int periodoFiscal)
         {
             const string sqlString = "Select * From Periodo Where Periodo_Fiscal = @periodoFiscal";
             return DbCliente.GetConexion().QueryFirstOrDefault<Periodo>(sqlString, new { periodoFiscal });

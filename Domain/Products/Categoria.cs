@@ -43,7 +43,7 @@ namespace Domain.Products
             
         }
 
-        public static Categoria GetCategoria(int categoriaId)
+        public static Categoria FindCategoria(int categoriaId)
         {
             const string sqlString = "Select * From Categoria Where Categoria_ID = @categoriaId";
             return DbCliente.GetConexion().QueryFirstOrDefault<Categoria>(sqlString, new {categoriaId});

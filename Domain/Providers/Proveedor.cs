@@ -27,7 +27,7 @@ namespace Domain.Providers
             return DbCliente.GetConexion().Query<Proveedor>(sqlString).ToList();
         }
 
-        public static Proveedor GetProveedor(int id)
+        public static Proveedor FindProveedor(int id)
         {
             const string sqlString = "Select * from Proveedor Where Proveedor_ID = @id";
             return DbCliente.GetConexion().QueryFirst<Proveedor>(sqlString, new {id});

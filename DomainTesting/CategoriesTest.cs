@@ -20,7 +20,7 @@ namespace DomainTesting
             Assert.DoesNotThrow(() =>
             {
                 PopulateCategorias();
-                var categoria = Categoria.GetCategoria(1);
+                var categoria = Categoria.FindCategoria(1);
                 categoria.GetSubCategorias();
             });
         }
@@ -30,7 +30,7 @@ namespace DomainTesting
         {
             
             PopulateCategorias();
-            var categoria = Categoria.GetCategoria(1);
+            var categoria = Categoria.FindCategoria(1);
             Assert.Multiple(() =>
             {
                 Assert.Throws<DuplicateNameException>(
@@ -51,7 +51,7 @@ namespace DomainTesting
         {
             
             PopulateCategorias();
-            var categoria = Categoria.GetCategoria(1);
+            var categoria = Categoria.FindCategoria(1);
             Assert.Multiple(() =>
             {
                 Assert.Throws<ArgumentNullException>(
@@ -72,7 +72,7 @@ namespace DomainTesting
         {
             
             PopulateCategorias();
-            var categoria = Categoria.GetCategoria(1);
+            var categoria = Categoria.FindCategoria(1);
             
             Assert.Throws<ArgumentOutOfRangeException>(
                 () => Categoria.AgregarCategoria("Motores", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vel placerat dui, in interdum felis. Mauris eleifend cursus volutpat. Nulla ante tellus, faucibus quis leo nec, blandit vehicula ante. Aliquam gravida elementum sollicitudin. Praesent non volutpat sem. Maecenas lacus ligula, finibus sed accumsan quis, aliquam non tellus. Aenean nec commodo risus. Donec lacinia auctor congue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Etiam quis euismod ligula, nec eleifend sapien. Integer quam magna, maximus eu dignissim vitae, blandit a enim. Nulla rutrum fringilla luctus. Integer laoreet consequat dapibus. Vivamus rhoncus lectus ut scelerisque pellentesque. Duis luctus ligula arcu, at efficitur nisi mollis sit amet. Nulla molestie ultricies odio, sed scelerisque erat dictum nec. Phasellus pellentesque sit amet mi non consectetur. Maecenas luctus erat id mauris ultrices, porta suscipit purus accumsan. Proin semper risus eu nulla efficitur scelerisque. Vivamus metus velit, congue id magna et, mattis luctus magna. Quisque at sagittis enim, quis iaculis nisl. Donec ut tempor nisi. "),

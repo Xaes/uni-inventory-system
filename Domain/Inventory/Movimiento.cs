@@ -81,7 +81,7 @@ namespace Domain.Inventory
             }
         }
 
-        public static Movimiento GetMovimiento(int movimientoId)
+        public static Movimiento FindMovimiento(int movimientoId)
         {
             const string sqlString = "Select * From Movimiento Where Movimiento_ID = @movimientoId";
             return DbCliente.GetConexion().QueryFirstOrDefault<Movimiento>(sqlString, new {movimientoId});

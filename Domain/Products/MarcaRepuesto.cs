@@ -44,7 +44,7 @@ namespace Domain.Products
             
         }
 
-        public static MarcaRepuesto GetMarca(int marcaRepuestoId)
+        public static MarcaRepuesto FindMarca(int marcaRepuestoId)
         {
             const string sqlString = "Select * From MarcaRepuesto Where MarcaRepuesto_ID = @marcaRepuestoId";
             return DbCliente.GetConexion().QueryFirstOrDefault<MarcaRepuesto>(sqlString, new {marcaRepuestoId});

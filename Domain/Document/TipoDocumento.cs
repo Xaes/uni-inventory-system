@@ -53,7 +53,7 @@ namespace Domain.Document
             
         }
         
-        public static TipoDocumento GetTipoDocumento(int tipoDocumentoId)
+        public static TipoDocumento FindTipoDocumento(int tipoDocumentoId)
         {
             const string sqlString = "Select * From TipoDocumento Where TipoDocumento_ID = @tipoDocumentoId";
             return DbCliente.GetConexion().QueryFirstOrDefault<TipoDocumento>(sqlString, new {tipoDocumentoId});

@@ -19,7 +19,7 @@ namespace DomainTesting
             Assert.DoesNotThrow(() =>
             {
                 this.PopularProveedores();
-                Proveedor.GetProveedor(1);
+                Proveedor.FindProveedor(1);
                 Proveedor.GetProveedores();
             });
         }

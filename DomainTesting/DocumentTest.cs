@@ -2,6 +2,8 @@ using System;
 using System.Data;
 using Domain.Document;
 using Domain.Inventory;
+using Domain.Locations;
+using Domain.Products;
 using NUnit.Framework;
 
 namespace DomainTesting
@@ -12,9 +14,17 @@ namespace DomainTesting
         public void PopularDocumentos()
         {
             MovementTest.PopularMovimientos();
+            ReplacementTest.PopularRepuestos();
+            LocationTests.PopularLocalizaciones();
+
+            var bodega = Bodega.FindBodega(1);
+            var repuesto = Repuesto.FindRepuesto(1);
+            
             var tipoDocumento = TipoDocumento.AgregarTipo(1, "Entrada por Compra", true, true);
             var documento = Documento.AgregarDocumento(null, tipoDocumento.TipoDocumento_ID, 10, DateTime.Now);
-            //var linea = LineaDocumento.AgregarLinea(documento.Documento_ID, Movimiento.GetMovimiento(1), );
+            LineaDocumento.AgregarLinea(documento.Documento_ID, Movimiento.FindMovimiento(1).Movimiento_ID,
+                repuesto.Repuesto_ID, bodega.Bodega_ID, 10, 1, 1, 3,
+                10.50F, null);
         }
 
         [Test]
@@ -23,9 +33,9 @@ namespace DomainTesting
             Assert.DoesNotThrow(() =>
             {
                 this.PopularDocumentos();
-                TipoDocumento.GetTipoDocumento(1);
+                TipoDocumento.FindTipoDocumento(1);
                 TipoDocumento.GetTipoDocumentos();
-                Documento.GetDocumento(1);
+                Documento.FindDocumento(1);
                 Documento.GetDocumentos();
             });
         }
@@ -35,7 +45,7 @@ namespace DomainTesting
         {
             
             this.PopularDocumentos();
-            var tipoDocumento = TipoDocumento.GetTipoDocumento(1);
+            var tipoDocumento = TipoDocumento.FindTipoDocumento(1);
             
             Assert.Multiple(() =>
             {

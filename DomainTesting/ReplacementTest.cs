@@ -12,8 +12,8 @@ namespace DomainTesting
         {
             CategoriesTest.PopulateCategorias();
             BrandTest.PopularMarcas();
-            var marca = MarcaRepuesto.GetMarca(1);
-            var subcat = Categoria.GetCategoria(1).GetSubCategorias()[0];
+            var marca = MarcaRepuesto.FindMarca(1);
+            var subcat = Categoria.FindCategoria(1).GetSubCategorias()[0];
             Repuesto.AgregarRepuesto(
                 "100-HF-120E",
                 "Michelin Pilot Sport 4 SUV", 
@@ -33,7 +33,7 @@ namespace DomainTesting
             Assert.DoesNotThrow(() =>
             {
                 PopularRepuestos();
-                Repuesto.GetRepuesto(1);
+                Repuesto.FindRepuesto(1);
                 Repuesto.GetRepuestos();
             });
         }
@@ -43,8 +43,8 @@ namespace DomainTesting
         {
             
             PopularRepuestos();
-            var marca = MarcaRepuesto.GetMarca(1);
-            var subcat = Categoria.GetCategoria(1).GetSubCategorias()[0];
+            var marca = MarcaRepuesto.FindMarca(1);
+            var subcat = Categoria.FindCategoria(1).GetSubCategorias()[0];
             
             Assert.Multiple(() =>
             {
@@ -87,8 +87,8 @@ namespace DomainTesting
         {
             
             PopularRepuestos();
-            var marca = MarcaRepuesto.GetMarca(1);
-            var subcat = Categoria.GetCategoria(1).GetSubCategorias()[0];
+            var marca = MarcaRepuesto.FindMarca(1);
+            var subcat = Categoria.FindCategoria(1).GetSubCategorias()[0];
             
             Assert.Multiple(() =>
             {
