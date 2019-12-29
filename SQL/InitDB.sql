@@ -112,7 +112,7 @@ IF NOT EXISTS (SELECT  * FROM sysobjects WHERE name='RepuestoCompatibilidad' and
     CREATE TABLE RepuestoCompatibilidad
     (
         FK_Repuesto_ID int FOREIGN KEY REFERENCES Repuesto(Repuesto_ID),
-        FK_ModeloVehiculo_ID int FOREIGN KEY REFERENCES ModeloVehiculo(ModeloVehiculo_ID)
+        FK_ModeloVehiculo_ID int FOREIGN KEY REFERENCES ModeloVehiculo(ModeloVehiculo_ID),
 
         CONSTRAINT PK_RepuestoCompatibilidad PRIMARY KEY NONCLUSTERED (FK_Repuesto_ID, FK_ModeloVehiculo_ID)
     )
