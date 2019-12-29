@@ -70,5 +70,22 @@ namespace DomainTesting
                     10, DateTime.Now, TipoTransaccion.SALIDA);
             });
         }
+
+        [Test]
+        public void CrearMovimientoLlaveForeanaErronea()
+        {
+            LocationTests.PopularLocalizaciones();
+            PeriodTest.PopularPeriodos();
+            var periodo = Periodo.FindPeriodo(2018);
+            var loc1 = Localizacion.GetLocalizaciones()[0];
+            
+            Assert.Throws<ArgumentException>(() =>
+            {
+                Movimiento.AgregarMovimiento("2-10002-10001-10000", loc1.Codigo, periodo.Periodo_ID,
+                    1000, 100, null, 10, DateTime.Now,
+                    TipoTransaccion.SALIDA);
+            }, "[ERROR]: Una excepcion ArgumentException deberia ser lanzada en creacion de Movimientos cuando los codigo de localizacion son erroneos.");
+        }
+        
     }
 }

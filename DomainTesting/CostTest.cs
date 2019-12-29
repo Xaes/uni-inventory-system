@@ -1,4 +1,5 @@
 using System;
+using Domain.Document;
 using Domain.Inventory;
 using Domain.Products;
 using NUnit.Framework;
@@ -26,5 +27,15 @@ namespace DomainTesting
                 Costo.GetCostos();
             });
         }
+
+        [Test]
+        public void CrearCostosLlaveForaneaErronea()
+        {
+            Assert.Throws<ArgumentException>(
+                () => Costo.AgregarCosto(0, 10, DateTime.Now, 10F),
+                "[ERROR]: Una excepcion ArgumentException deberia ser lanzada en creacion de Costos cuando el codigo de Repuesto es erroneo."
+            );
+        }
+        
     }
 }
