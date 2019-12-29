@@ -42,6 +42,22 @@ namespace DomainTesting
                 Movimiento.GetMovimientos(); 
             });
         }
+        
+        [Test]
+        public void CrearMovimientoMismaLocalizacion()
+        {
+            LocationTests.PopularLocalizaciones();
+            PeriodTest.PopularPeriodos();
+            var periodo = Periodo.FindPeriodo(2018);
+            var loc1 = Localizacion.GetLocalizaciones()[0];
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                Movimiento.AgregarMovimiento(loc1.Codigo, loc1.Codigo, periodo.Periodo_ID,
+                    1000, 100, null, 10, DateTime.Now,
+                    TipoTransaccion.SALIDA);
+            }, "[ERROR]: Una excepcion ArgumentException deberia ser lanzada en creacion de Movimientos que tienen la misma localizacion como entrada y salida.");
+        }
 
         [Test]
         public void CrearMovimientoParametrosNulos()
