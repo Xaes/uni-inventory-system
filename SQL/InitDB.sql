@@ -114,7 +114,8 @@ IF NOT EXISTS (SELECT  * FROM sysobjects WHERE name='RepuestoCompatibilidad' and
         FK_Repuesto_ID int FOREIGN KEY REFERENCES Repuesto(Repuesto_ID),
         FK_ModeloVehiculo_ID int FOREIGN KEY REFERENCES ModeloVehiculo(ModeloVehiculo_ID),
 
-        CONSTRAINT PK_RepuestoCompatibilidad PRIMARY KEY NONCLUSTERED (FK_Repuesto_ID, FK_ModeloVehiculo_ID)
+        CONSTRAINT PK_RepuestoCompatibilidad PRIMARY KEY NONCLUSTERED (FK_Repuesto_ID, FK_ModeloVehiculo_ID),
+        CONSTRAINT UK_RepuestoCompatibilidad UNIQUE (FK_ModeloVehiculo_ID, FK_Repuesto_ID)
     )
 
 /** DOMINIO: INVENTARIO **/
@@ -165,12 +166,13 @@ IF NOT EXISTS (SELECT  * FROM sysobjects WHERE name='Costo' and xtype='U')
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Existencia' and xtype='U')
     CREATE TABLE Existencia
     (
-        Existecia_ID int IDENTITY,
+        Existencia_ID int IDENTITY,
         FK_Repuesto_ID int NOT NULL FOREIGN KEY REFERENCES Repuesto(Repuesto_ID),
         FK_Localizacion_ID VARCHAR(25) NOT NULL FOREIGN KEY REFERENCES Localizacion(Codigo),
         Unidades int NOT NULL,
 
-        CONSTRAINT PK_Existencia PRIMARY KEY NONCLUSTERED (Existecia_ID)
+        CONSTRAINT PK_Existencia PRIMARY KEY NONCLUSTERED (Existencia_ID),
+        CONSTRAINT UK_Existencia UNIQUE (FK_Repuesto_ID, FK_Localizacion_ID)
     )
 
 /** DOMINIO: PROVEEDOR **/

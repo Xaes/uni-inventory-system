@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Dapper;
 using Domain.DB;
 using Microsoft.Data.SqlClient;
@@ -36,6 +38,12 @@ namespace Domain.Locations
             {
                 throw SqlExceptionMapper.Map(ex);
             }
+        }
+
+        public static List<Localizacion> GetLocalizaciones()
+        {
+            const string sqlString = "Select * From Localizacion";
+            return DbCliente.GetConexion().Query<Localizacion>(sqlString).ToList();
         }
         
         public override string ToString()

@@ -22,7 +22,7 @@ namespace Domain.Inventory
             this.FK_Localizacion_ID = localizacionId;
         }
 
-        public static Existencia AgregarCosto(int fkRepuestoId, int unidades, string fkLocalizacionId)
+        public static Existencia AgregarExistencia(int fkRepuestoId, int unidades, string fkLocalizacionId)
         {
             try
             {
