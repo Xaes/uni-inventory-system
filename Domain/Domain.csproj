@@ -1,17 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <TargetFramework>netstandard2.1</TargetFramework>
         <LangVersion>8</LangVersion>
         <Title>Inventory System Domains</Title>
         <Authors>Diego Balmaceda</Authors>
         <PackageProjectUrl>https://gitlab.com/xaesdesign/inventory-system</PackageProjectUrl>
         <RepositoryUrl>https://gitlab.com/xaesdesign/inventory-system</RepositoryUrl>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Dapper" Version="2.0.30" />
         <PackageReference Include="Microsoft.Data.SqlClient" Version="1.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Utils" />
     </ItemGroup>
     
 </Project>

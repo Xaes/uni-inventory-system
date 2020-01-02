@@ -12,6 +12,8 @@
         <PackageProjectUrl>https://gitlab.com/xaesdesign/inventory-system</PackageProjectUrl>
 
         <RepositoryUrl>https://gitlab.com/xaesdesign/inventory-system</RepositoryUrl>
+
+        <OutputType>Library</OutputType>
     </PropertyGroup>
 
     <ItemGroup>

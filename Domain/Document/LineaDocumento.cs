@@ -40,7 +40,7 @@ namespace Domain.Document
                 const string sqlString = 
                     "Insert Into LineaDocumento (FK_DocumentoID, FK_MovimientoID, FK_RepuestoID, FK_BodegaID, " +
                     "Unidades, UnidadesNoRecibidas, UnidadesDanadas, CantidadPaquetes, CostoUnitario, PrecioVentaUnitario)" +
-                    "Values (@fkDocumentoId, @fkMovimientoId, @fkRepuestoId, @fkBodegaId, @unidades, @unidadesNoRecibidas " +
+                    "Values (@fkDocumentoId, @fkMovimientoId, @fkRepuestoId, @fkBodegaId, @unidades, @unidadesNoRecibidas, " +
                     "@unidadesDanadas, @cantidadPaquetes, @costoUnitario, @precioVentaUnitario);" +
                     "Select Cast(SCOPE_IDENTITY() as int)";
 

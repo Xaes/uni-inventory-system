@@ -15,7 +15,6 @@ namespace DomainTesting
         {
             MovementTest.PopularMovimientos();
             ReplacementTest.PopularRepuestos();
-            LocationTests.PopularLocalizaciones();
 
             var bodega = Bodega.FindBodega(1);
             var repuesto = Repuesto.FindRepuesto(1);
