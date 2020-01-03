@@ -40,6 +40,11 @@ namespace Domain.Locations
             }
         }
 
+        public Bodega GetBodega()
+        {
+            return Bodega.FindBodega(Convert.ToInt32(this.Codigo.Split('/')[3]));
+        }
+
         public static List<Localizacion> GetLocalizaciones()
         {
             const string sqlString = "Select * From Localizacion";
