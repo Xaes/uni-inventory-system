@@ -18,8 +18,8 @@ namespace DomainTesting
 
             var bodega = Bodega.FindBodega(1);
             var repuesto = Repuesto.FindRepuesto(1);
+            var tipoDocumento = TipoDocumento.FindTipoDocumento(TipoDocumento.IDS[TipoDocumentos.ENTRADA_COMPRA]);
             
-            var tipoDocumento = TipoDocumento.AgregarTipo(1, "Entrada por Compra", true, true);
             var documento = Documento.AgregarDocumento(null, tipoDocumento.TipoDocumento_ID, DateTime.Now);
             documento.AgregarLinea(Movimiento.FindMovimiento(1).Movimiento_ID,
                 repuesto.Repuesto_ID, bodega.Bodega_ID, 10, 1, 1, 3,
@@ -32,7 +32,7 @@ namespace DomainTesting
             Assert.DoesNotThrow(() =>
             {
                 PopularDocumentos();
-                TipoDocumento.FindTipoDocumento(1);
+                TipoDocumento.FindTipoDocumento(TipoDocumento.IDS[TipoDocumentos.ENTRADA_COMPRA]);
                 TipoDocumento.GetTipoDocumentos();
                 Documento.FindDocumento(1);
                 Documento.GetDocumentos();
@@ -44,7 +44,7 @@ namespace DomainTesting
         {
             
             PopularDocumentos();
-            var tipoDocumento = TipoDocumento.FindTipoDocumento(1);
+            var tipoDocumento = TipoDocumento.FindTipoDocumento(TipoDocumento.IDS[TipoDocumentos.ENTRADA_COMPRA]);
             
             Assert.Throws<DuplicateNameException>(() => TipoDocumento.AgregarTipo(1, "Entrada por Compra", true, true),
                 "[ERROR]: Una excepcion DuplicateNameException deberia ser lanzada en TipoDocumento."

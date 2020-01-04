@@ -8,7 +8,6 @@ using Domain.Providers;
 
 namespace Domain.Transaction
 {
-    
     public class RecepcionBuilder
     {
         
@@ -19,6 +18,7 @@ namespace Domain.Transaction
         public Recepcion Build()
         {
             
+            this.SetTipoDocumento(TipoDocumento.IDS[TipoDocumentos.ENTRADA_COMPRA]);
             var transaccion = this.recepcion;
             
             // Validar si hay productos.
@@ -141,7 +141,7 @@ namespace Domain.Transaction
             this.recepcion.bodega = bodega;
         }
         
-        public void SetTipoDocumento(int tipoDocumentoId)
+        private void SetTipoDocumento(int tipoDocumentoId)
         {
             var tipoDocumento = TipoDocumento.FindTipoDocumento(tipoDocumentoId);
             if(tipoDocumento == null)

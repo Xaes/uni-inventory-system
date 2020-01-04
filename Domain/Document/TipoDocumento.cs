@@ -7,6 +7,15 @@ using Microsoft.Data.SqlClient;
 
 namespace Domain.Document
 {
+
+    public enum TipoDocumentos
+    {
+        ENTRADA_COMPRA,
+        ENTRADA_TRANSFERENCIA,
+        SALIDA_COMPRA,
+        SALIDA_TRANSFERENCIA
+    }
+    
     public class TipoDocumento
     {
 
@@ -14,6 +23,14 @@ namespace Domain.Document
         private int UltimoNumDoc;
         public string Nombre;
         public readonly bool CambiaUnidades, CambiaCosto;
+
+        public static Dictionary<TipoDocumentos, int> IDS = new Dictionary<TipoDocumentos, int>
+        {
+            { TipoDocumentos.ENTRADA_COMPRA, 1 },
+            { TipoDocumentos.ENTRADA_TRANSFERENCIA, 2 },
+            { TipoDocumentos.SALIDA_COMPRA, 3 },
+            { TipoDocumentos.SALIDA_TRANSFERENCIA, 4 }
+        };
         
         public TipoDocumento() {}
         

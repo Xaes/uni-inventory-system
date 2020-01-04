@@ -28,7 +28,6 @@ namespace DomainTesting
                 builder.SetBodega(Bodega.FindBodega(1).Bodega_ID);
                 builder.SetFecha(DateTime.Now);
                 builder.SetProveedor(Proveedor.FindProveedor(1).Proveedor_ID);
-                builder.SetTipoDocumento(TipoDocumento.FindTipoDocumento(1).TipoDocumento_ID);
                 builder.AgregarProductos(
                     Repuesto.FindRepuesto(1).Repuesto_ID,
                     10,
