@@ -31,34 +31,6 @@ namespace Domain.Document
             this.PrecioVentaUnitario = precioVentaUnitario;
         }
 
-        public static LineaDocumento AgregarLinea(int fkDocumentoId, int fkMovimientoId, int fkRepuestoId,
-            int fkBodegaId, int unidades, int? unidadesNoRecibidas, int? unidadesDanadas, int? cantidadPaquetes,
-            float? costoUnitario, float? precioVentaUnitario)
-        {
-            try
-            {
-                const string sqlString = 
-                    "Insert Into LineaDocumento (FK_DocumentoID, FK_MovimientoID, FK_RepuestoID, FK_BodegaID, " +
-                    "Unidades, UnidadesNoRecibidas, UnidadesDanadas, CantidadPaquetes, CostoUnitario, PrecioVentaUnitario)" +
-                    "Values (@fkDocumentoId, @fkMovimientoId, @fkRepuestoId, @fkBodegaId, @unidades, @unidadesNoRecibidas, " +
-                    "@unidadesDanadas, @cantidadPaquetes, @costoUnitario, @precioVentaUnitario);" +
-                    "Select Cast(SCOPE_IDENTITY() as int)";
-
-                var id = DbCliente.GetConexion().Execute(sqlString, new
-                {
-                    fkDocumentoId, fkMovimientoId, fkRepuestoId, fkBodegaId, unidades, unidadesNoRecibidas, unidadesDanadas,
-                    cantidadPaquetes, costoUnitario, precioVentaUnitario
-                });
-                
-                return new LineaDocumento(id, fkDocumentoId, fkMovimientoId, fkRepuestoId, fkBodegaId, unidades, 
-                    unidadesNoRecibidas, unidadesDanadas, cantidadPaquetes, costoUnitario, precioVentaUnitario);
-            }
-            catch (SqlException ex)
-            {
-                throw SqlExceptionMapper.Map(ex);
-            }
-        }
-
         public Documento GetDocumento()
         {
             const string sqlString = "Select * From Documento Where Documento_ID = @FK_DocumentoID";
