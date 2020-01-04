@@ -21,7 +21,7 @@ namespace DomainTesting
             
             var tipoDocumento = TipoDocumento.AgregarTipo(1, "Entrada por Compra", true, true);
             var documento = Documento.AgregarDocumento(null, tipoDocumento.TipoDocumento_ID, DateTime.Now);
-            LineaDocumento.AgregarLinea(documento.Documento_ID, Movimiento.FindMovimiento(1).Movimiento_ID,
+            documento.AgregarLinea(Movimiento.FindMovimiento(1).Movimiento_ID,
                 repuesto.Repuesto_ID, bodega.Bodega_ID, 10, 1, 1, 3,
                 10.50F, null);
         }
