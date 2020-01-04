@@ -18,7 +18,16 @@ namespace Domain.Transaction
         public Recepcion Build()
         {
             
+            // Estableciendo Tipo de Documento (Entrada por Compra).
+            
             this.SetTipoDocumento(TipoDocumento.IDS[TipoDocumentos.ENTRADA_COMPRA]);
+            
+            // Verificar si los atributos no son nulos.
+            
+            if(this.recepcion.bodega == null || this.recepcion.fecha == DateTime.MinValue || this.recepcion.proveedor == null ||
+               this.recepcion.tipoDocumento == null )
+                throw new ArgumentNullException("", "Los parametros necesarios para construir una Recepcion no fueron proveidos.");
+            
             var transaccion = this.recepcion;
             
             // Validar si hay productos.
@@ -136,24 +145,18 @@ namespace Domain.Transaction
         public void SetBodega(int bodegaId)
         {
             var bodega = Bodega.FindBodega(bodegaId);
-            if(bodega == null)
-                throw new ArgumentException("La bodega no existe en la base de datos.");
             this.recepcion.bodega = bodega;
         }
         
         private void SetTipoDocumento(int tipoDocumentoId)
         {
             var tipoDocumento = TipoDocumento.FindTipoDocumento(tipoDocumentoId);
-            if(tipoDocumento == null)
-                throw new ArgumentException("El Tipo de Documento no existe en la base de datos.");
             this.recepcion.tipoDocumento = tipoDocumento;
         }
         
         public void SetProveedor(int proveedorId)
         {
             var proveedor = Proveedor.FindProveedor(proveedorId);
-            if(proveedor == null)
-                throw new ArgumentException("El proveedor no existe en la base de datos.");
             this.recepcion.proveedor = proveedor;
         }
 
@@ -168,7 +171,7 @@ namespace Domain.Transaction
             
             // Checkear si la fecha proporcionada esta dentro del rango del periodo activo.
 
-            if (periodo.FechaInicio.CompareTo(fecha) > 0 && periodo.FechaFinal.CompareTo(fecha) < 0)
+            if (periodo.FechaInicio.CompareTo(fecha) > 0 || periodo.FechaFinal.CompareTo(fecha) < 0)
                 throw new ArgumentException("La fecha propocionada debe estar dentro del rango del periodo activo.");
 
             this.recepcion.fecha = fecha;
