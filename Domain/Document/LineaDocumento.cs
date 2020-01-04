@@ -64,7 +64,16 @@ namespace Domain.Document
             const string sqlString = "Select * From Documento Where Documento_ID = @FK_DocumentoID";
             return DbCliente.GetConexion().QueryFirstOrDefault<Documento>(sqlString, new {FK_DocumentoID});
         }
-        
-        
+
+        public override string ToString()
+        {
+            return $"Linea Documento: [ID: {LineaDocumentoID} / Documento: {FK_DocumentoID} / " +
+                   $"Repuesto: {FK_RepuestoID} / Movimiento: {FK_MovimientoID} / Bodega: {FK_BodegaID} / " +
+                   $"Costo Unitario: {CostoUnitario} / Cantidad de Paquetes: {CantidadPaquetes} / " +
+                   $"Precio Venta Unitario: {PrecioVentaUnitario}" + $"Unidades: {Unidades} / " +
+                   $"Unidades Faltantes: {UnidadesNoRecibidas} / Unidades Danadas: {UnidadesDanadas}]";
+        }
+
+
     }
 }

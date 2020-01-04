@@ -26,10 +26,13 @@ namespace Domain.Document
             this.Fecha = fecha;
         }
 
-        public static Documento AgregarDocumento(int? proveedorId, int tipoDocumentoId, int numeroDoc, DateTime fecha)
+        public static Documento AgregarDocumento(int? proveedorId, int tipoDocumentoId, DateTime fecha)
         {
             try
             {
+                var tipoDocumento = TipoDocumento.FindTipoDocumento(tipoDocumentoId);
+                var numeroDoc = tipoDocumento.GenerarCodigo();
+                
                 const string sqlString =
                     "Insert Into Documento (FK_ProveedorID, FK_TipoDocumentoID, NumeroDoc, Fecha)" +
                     "Values (@proveedorId, @tipoDocumentoId, @numeroDoc, @fecha);" +
@@ -40,7 +43,9 @@ namespace Domain.Document
                     new {proveedorId, tipoDocumentoId, numeroDoc, fecha}
                 );
 
-                return new Documento(id, proveedorId, tipoDocumentoId, numeroDoc, fecha);
+                var documento = new Documento(id, proveedorId, tipoDocumentoId, numeroDoc, fecha);
+                tipoDocumento.ActualizarSecuencia();
+                return documento;
             }
             catch (SqlException ex)
             {

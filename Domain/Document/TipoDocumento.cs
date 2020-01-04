@@ -65,6 +65,18 @@ namespace Domain.Document
             return DbCliente.GetConexion().Query<TipoDocumento>(sqlString).ToList();
         }
 
+        internal int GenerarCodigo()
+        {
+            return Convert.ToInt32($"{this.TipoDocumento_ID}{this.UltimoNumDoc}");
+        }
+        
+        internal void ActualizarSecuencia()
+        {
+            this.UltimoNumDoc++;
+            const string sqlString = "Update TipoDocumento Set UltimoNumDoc = @UltimoNumDoc Where TipoDocumento_ID = @TipoDocumento_ID";
+            DbCliente.GetConexion().Execute(sqlString, new { this.UltimoNumDoc, this.TipoDocumento_ID });
+        }
+
         public override string ToString()
         {
             return $"Tipo Documento: [ID: {TipoDocumento_ID} / Ultimo No. Doc: {UltimoNumDoc} / " +
