@@ -63,12 +63,26 @@ namespace DomainTesting
         public void CrearMovimientoParametrosNulos()
         {
             this.CrearMovimientos();
-            Assert.Throws<ArgumentNullException>(() =>
+            var loc1 = Localizacion.GetLocalizaciones()[0];
+            var loc2 = Localizacion.GetLocalizaciones()[1];
+            var periodo = Periodo.FindPeriodo(2018);
+            Assert.Multiple(() =>
             {
-                Movimiento.AgregarMovimiento(null, null,
-                    Periodo.FindPeriodo(2018).Periodo_ID, 1000, 100,
-                    10, DateTime.Now, TipoTransaccion.SALIDA);
+                
+                Assert.Throws<ArgumentNullException>(() =>
+                {
+                    Movimiento.AgregarMovimiento(null, null,
+                        Periodo.FindPeriodo(2018).Periodo_ID, 1000, 100,
+                        10, DateTime.Now, TipoTransaccion.SALIDA);
+                }, "[ERROR]: Una excepcion ArgumentNullException deberia ser lanzada en creacion de Movimientos cuando los codigo de localizacion son nulos.");
+                
+                Assert.DoesNotThrow(() =>
+                {
+                    Movimiento.AgregarMovimiento(loc1.Codigo, loc2.Codigo, periodo.Periodo_ID,
+                        null, null, 10, DateTime.Now, TipoTransaccion.ENTRADA);
+                });
             });
+            
         }
 
         [Test]
