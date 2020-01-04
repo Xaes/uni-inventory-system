@@ -1,3 +1,4 @@
+using System;
 using System.Data;
 using Domain.Inventory;
 using Domain.Locations;
@@ -42,6 +43,14 @@ namespace DomainTesting
                 this.PopularExistencias();
             }, "[ERROR]: Una excepcion DuplicateNameException deberia ser lanzada en creacion de Existencias.");
         }
-        
+
+        [Test]
+        public void CrearExistenciasParametrosErroneos()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                Existencia.AgregarExistencia(1, 0, Localizacion.GetLocalizaciones()[0].Codigo);
+            }, "[ERROR]: Una excepcion ArgumentOutOfRangeException deberia ser lanzada en creacion de Existencia cuando las unidades son 0 o negativas.");
+        }
     }
 }

@@ -46,7 +46,12 @@ namespace DomainTesting
             PopularDocumentos();
             var tipoDocumento = TipoDocumento.FindTipoDocumento(TipoDocumento.IDS[TipoDocumentos.ENTRADA_COMPRA]);
             
-            Assert.Throws<DuplicateNameException>(() => TipoDocumento.AgregarTipo(1, "Entrada por Compra", true, true),
+            Assert.Throws<DuplicateNameException>(() => TipoDocumento.AgregarTipo(
+                    1, 
+                    "Entrada por Compra", 
+                    true, 
+                    true
+                ),
                 "[ERROR]: Una excepcion DuplicateNameException deberia ser lanzada en TipoDocumento."
             );
             
@@ -64,6 +69,29 @@ namespace DomainTesting
                 );
             });
         }
-        
+
+        [Test]
+        public void CrearDocumentosParametrosErroneos()
+        {
+            
+            PopularDocumentos();
+            var tipoDocumento = TipoDocumento.FindTipoDocumento(TipoDocumento.IDS[TipoDocumentos.ENTRADA_COMPRA]);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                var documento = Documento.FindDocumento(1);
+                documento.AgregarLinea(Movimiento.FindMovimiento(1).Movimiento_ID,
+                    Repuesto.FindRepuesto(1).Repuesto_ID,
+                    Bodega.FindBodega(1).Bodega_ID,
+                    0,
+                    -1,
+                    -1,
+                    -3,
+                    10.50F,
+                    null
+                );
+            }, "[ERROR]: Una excepcion ArgumentOutOfRangeException deberia ser lanzada en creacion de Lineas de Documento cuando las unidades son 0 o negativas.");
+            
+        }
+
     }
 }

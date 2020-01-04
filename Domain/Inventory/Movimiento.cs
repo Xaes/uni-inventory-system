@@ -53,9 +53,9 @@ namespace Domain.Inventory
             
             // Validar si algun parametro esta fuera del minimo aceptable.
 
-            if (unidades <= 0 || costoUnitario < 0)
+            if (unidades <= 0 || costoUnitario < 0 || precioVentaUnitario < 0)
                 throw new ArgumentOutOfRangeException("", "Las Unidades deberian ser mayores a 0. " + 
-                    "El costo unitario debe ser mayor o igual que 0.");
+                    "El costo unitario y el precio de venta unitario debe ser mayor o igual que 0.");
             
             if (string.IsNullOrWhiteSpace(fkLocalizacionInicialId) && string.IsNullOrWhiteSpace(fkLocalizacionFinalId))
                 throw new ArgumentNullException("","Ambas Localizaciones no pueden ser nulas, estar vacias o solo contener espacios.");

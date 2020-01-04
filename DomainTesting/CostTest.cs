@@ -36,6 +36,15 @@ namespace DomainTesting
                 "[ERROR]: Una excepcion ArgumentException deberia ser lanzada en creacion de Costos cuando el codigo de Repuesto es erroneo."
             );
         }
+
+        [Test]
+        public void CrearCostosParametrosErroneos()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(
+                () => Costo.AgregarCosto(1, 0, DateTime.Now, -1),
+                "[ERROR]: Una excepcion ArgumentOutOfRangeException deberia ser lanzada en creacion de Costos cuando las unidades son 0 o negativas."
+            );
+        }
         
     }
 }

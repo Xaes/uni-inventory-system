@@ -100,6 +100,22 @@ namespace DomainTesting
                     TipoTransaccion.SALIDA);
             }, "[ERROR]: Una excepcion ArgumentException deberia ser lanzada en creacion de Movimientos cuando los codigo de localizacion son erroneos.");
         }
+
+        [Test]
+        public void CrearMovimientoParametrosErroneos()
+        {
+            LocationTests.PopularLocalizaciones();
+            PeriodTest.PopularPeriodos();
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                Movimiento.AgregarMovimiento(
+                    Localizacion.GetLocalizaciones()[0].Codigo,
+                    Localizacion.GetLocalizaciones()[1].Codigo,
+                    Periodo.FindPeriodo(2018).Periodo_ID,
+                    -1, -1, 0, DateTime.Now, TipoTransaccion.SALIDA
+                );
+            }, "[ERROR]: Una excepcion ArgumentOutOfRangeException deberia ser lanzada en creacion de Movimientos cuando las unidades son 0 o negativas.");
+        }
         
     }
 }
