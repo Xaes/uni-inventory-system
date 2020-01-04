@@ -65,7 +65,7 @@ namespace Domain.Document
             return DbCliente.GetConexion().Query<TipoDocumento>(sqlString).ToList();
         }
 
-        internal int GenerarCodigo()
+        public int GenerarCodigo()
         {
             return Convert.ToInt32($"{this.TipoDocumento_ID}{this.UltimoNumDoc}");
         }
