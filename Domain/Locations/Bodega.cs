@@ -34,6 +34,12 @@ namespace Domain.Locations
             const string sqlString = "Select * From Bodega Where Bodega_ID = @id";
             return DbCliente.GetConexion().QueryFirst<Bodega>(sqlString, new {id});
         }
+
+        public static Bodega FindBodegaByCodigo(int codigo)
+        {
+            const string sqlString = "Select * From Bodega Where Codigo = @codigo";
+            return DbCliente.GetConexion().QueryFirst<Bodega>(sqlString, new {codigo});
+        }
         
         public List<Pasillo> GetPasillos()
         {

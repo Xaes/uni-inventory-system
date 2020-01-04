@@ -42,7 +42,8 @@ namespace Domain.Locations
 
         public Bodega GetBodega()
         {
-            return Bodega.FindBodega(Convert.ToInt32(this.Codigo.Split('/')[3]));
+            var codigos = this.Codigo.Split(new[] {'-'}, StringSplitOptions.RemoveEmptyEntries);
+            return Bodega.FindBodegaByCodigo(Convert.ToInt32(codigos[codigos.Length - 1]));
         }
 
         public static List<Localizacion> GetLocalizaciones()

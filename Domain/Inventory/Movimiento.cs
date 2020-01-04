@@ -51,10 +51,10 @@ namespace Domain.Inventory
         )
         {
             
-            if (string.IsNullOrWhiteSpace(fkLocalizacionInicialId) || string.IsNullOrWhiteSpace(fkLocalizacionInicialId))
-                throw new ArgumentNullException("","Localizaciones no pueden ser nulas, estar vacias o solo contener espacios.");
+            if (string.IsNullOrWhiteSpace(fkLocalizacionInicialId) && string.IsNullOrWhiteSpace(fkLocalizacionFinalId))
+                throw new ArgumentNullException("","Ambas Localizaciones no pueden ser nulas, estar vacias o solo contener espacios.");
             
-            if (fkLocalizacionFinalId.Equals(fkLocalizacionInicialId))
+            if (string.CompareOrdinal(fkLocalizacionFinalId, fkLocalizacionInicialId) == 0)
                 throw new ArgumentException("Un Movimiento no puede tener la misma localizacion como inicial y final.");
             
             try

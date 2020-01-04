@@ -11,7 +11,7 @@ namespace DomainTesting
     public class DocumentTest : Setup
     {
 
-        public void PopularDocumentos()
+        public static void PopularDocumentos()
         {
             MovementTest.PopularMovimientos();
             ReplacementTest.PopularRepuestos();
@@ -31,7 +31,7 @@ namespace DomainTesting
         {
             Assert.DoesNotThrow(() =>
             {
-                this.PopularDocumentos();
+                PopularDocumentos();
                 TipoDocumento.FindTipoDocumento(1);
                 TipoDocumento.GetTipoDocumentos();
                 Documento.FindDocumento(1);
@@ -43,26 +43,19 @@ namespace DomainTesting
         public void DuplicarDocumentos()
         {
             
-            this.PopularDocumentos();
+            PopularDocumentos();
             var tipoDocumento = TipoDocumento.FindTipoDocumento(1);
             
-            Assert.Multiple(() =>
-            {
-                Assert.Throws<DuplicateNameException>(() => TipoDocumento.AgregarTipo(1, "Entrada por Compra", true, true),
-                    "[ERROR]: Una excepcion DuplicateNameException deberia ser lanzada en TipoDocumento."
-                );
-                
-                Assert.Throws<DuplicateNameException>(() => Documento.AgregarDocumento(null, tipoDocumento.TipoDocumento_ID, DateTime.Now),
-                    "[ERROR]: Una excepcion DuplicateNameException deberia ser lanzada en TipoDocumento."
-                );
-                
-            });
+            Assert.Throws<DuplicateNameException>(() => TipoDocumento.AgregarTipo(1, "Entrada por Compra", true, true),
+                "[ERROR]: Una excepcion DuplicateNameException deberia ser lanzada en TipoDocumento."
+            );
+            
         }
 
         [Test]
         public void CrearDocumentosParametrosNulos()
         {
-            this.PopularDocumentos();
+            PopularDocumentos();
             Assert.Multiple(() =>
             {
                 Assert.Throws<ArgumentNullException>(

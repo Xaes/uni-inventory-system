@@ -8,7 +8,7 @@ namespace DomainTesting
     public class ProviderTest : Setup
     {
 
-        public void PopularProveedores()
+        public static void PopularProveedores()
         {
             Proveedor.AgregarProveedor("Proveedor #1");
         }
@@ -18,7 +18,7 @@ namespace DomainTesting
         {
             Assert.DoesNotThrow(() =>
             {
-                this.PopularProveedores();
+                PopularProveedores();
                 Proveedor.FindProveedor(1);
                 Proveedor.GetProveedores();
             });
@@ -27,7 +27,7 @@ namespace DomainTesting
         [Test]
         public void DuplicarProveedores()
         {
-            this.PopularProveedores();
+            PopularProveedores();
             Assert.Multiple(() =>
             {
 
@@ -42,7 +42,7 @@ namespace DomainTesting
         [Test]
         public void CrearProveedoresParametrosNulos()
         {
-            this.PopularProveedores();
+            PopularProveedores();
             Assert.Multiple(() => {
                 
                 Assert.Throws<ArgumentNullException>(() =>

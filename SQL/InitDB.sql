@@ -206,11 +206,11 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Documento' and xtype='U')
         Documento_ID int IDENTITY,
         FK_ProveedorID int FOREIGN KEY REFERENCES Proveedor(Proveedor_ID),
         FK_TipoDocumentoID int NOT NULL FOREIGN KEY REFERENCES TipoDocumento(TipoDocumento_ID),
-        NumeroDoc int NOT NULL UNIQUE,
+        NumeroDoc int NOT NULL,
         Fecha datetime NOT NULL,
 
         CONSTRAINT PK_Documento PRIMARY KEY NONCLUSTERED (Documento_ID),
-        CONSTRAINT UK_DOCUMENTO UNIQUE (FK_TipoDocumentoID)
+        CONSTRAINT UK_DOCUMENTO UNIQUE (NumeroDoc)
     )
 
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='LineaDocumento' and xtype='U')
