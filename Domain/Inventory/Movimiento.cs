@@ -46,7 +46,7 @@ namespace Domain.Inventory
         }
 
         public static Movimiento AgregarMovimiento(string fkLocalizacionInicialId, string fkLocalizacionFinalId,
-            int fkPeriodoId, float? costoTotal, float? costoUnitario, float? precioVentaUnitario,
+            int fkPeriodoId, float? costoUnitario, float? precioVentaUnitario,
             int unidades, DateTime fecha, TipoTransaccion transaccion
         )
         {
@@ -61,6 +61,8 @@ namespace Domain.Inventory
             {
                 
                 var tipoTransaccion = transaccion.ToString();
+                var costoTotal = costoUnitario * unidades;
+                
                 const string sqlString = 
                     "Insert Into Movimiento (FK_LocalizacionInicial_ID, FK_LocalizacionFinal_ID, FK_Periodo_ID," +
                     " CostoTotal, CostoUnitario, PrecioVentaUnitario, Unidades, Fecha, TipoTransaccion)" +

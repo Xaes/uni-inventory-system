@@ -27,7 +27,7 @@ namespace DomainTesting
             var periodo = Periodo.FindPeriodo(2018);
 
             Movimiento.AgregarMovimiento(loc1.Codigo, loc2.Codigo, periodo.Periodo_ID,
-                1000, 100, null, 10, DateTime.Now,
+                1000, 100, 10, DateTime.Now,
                 TipoTransaccion.SALIDA);
 
         }
@@ -54,7 +54,7 @@ namespace DomainTesting
             Assert.Throws<ArgumentException>(() =>
             {
                 Movimiento.AgregarMovimiento(loc1.Codigo, loc1.Codigo, periodo.Periodo_ID,
-                    1000, 100, null, 10, DateTime.Now,
+                    1000, 100, 10, DateTime.Now,
                     TipoTransaccion.SALIDA);
             }, "[ERROR]: Una excepcion ArgumentException deberia ser lanzada en creacion de Movimientos que tienen la misma localizacion como entrada y salida.");
         }
@@ -66,7 +66,7 @@ namespace DomainTesting
             Assert.Throws<ArgumentNullException>(() =>
             {
                 Movimiento.AgregarMovimiento(null, null,
-                    Periodo.FindPeriodo(2018).Periodo_ID, 1000, 100, null,
+                    Periodo.FindPeriodo(2018).Periodo_ID, 1000, 100,
                     10, DateTime.Now, TipoTransaccion.SALIDA);
             });
         }
@@ -82,7 +82,7 @@ namespace DomainTesting
             Assert.Throws<ArgumentException>(() =>
             {
                 Movimiento.AgregarMovimiento("2-10002-10001-10000", loc1.Codigo, periodo.Periodo_ID,
-                    1000, 100, null, 10, DateTime.Now,
+                    1000, 100, 10, DateTime.Now,
                     TipoTransaccion.SALIDA);
             }, "[ERROR]: Una excepcion ArgumentException deberia ser lanzada en creacion de Movimientos cuando los codigo de localizacion son erroneos.");
         }
