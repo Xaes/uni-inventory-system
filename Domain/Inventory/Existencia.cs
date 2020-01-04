@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dapper;
@@ -24,6 +25,13 @@ namespace Domain.Inventory
 
         public static Existencia AgregarExistencia(int fkRepuestoId, int unidades, string fkLocalizacionId)
         {
+            
+            // Validar si algun parametro esta fuera del minimo aceptable.
+
+            if (unidades <= 0)
+                throw new ArgumentOutOfRangeException("", "Las Unidades deberian ser mayores a 0. " + 
+                    "El Costo Unitario debe ser mayor o igual que 0.");
+            
             try
             {
                 const string sqlString = 

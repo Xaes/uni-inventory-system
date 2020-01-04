@@ -57,6 +57,13 @@ namespace Domain.Document
             int fkBodegaId, int unidades, int? unidadesNoRecibidas, int? unidadesDanadas, int? cantidadPaquetes,
             float? costoUnitario, float? precioVentaUnitario)
         {
+            
+            // Validar si algun parametro esta fuera del minimo aceptable.
+
+            if (unidades <= 0 || unidadesNoRecibidas < 0 || unidadesDanadas < 0 || cantidadPaquetes < 0)
+                throw new ArgumentOutOfRangeException("", "Las Unidades deberian ser mayores a 0. " + 
+                    "Las Unidades Faltantes, Danadas y Cantidad de Paquetes deben ser mayores o igual que 0.");
+            
             try
             {
                 const string sqlString = 

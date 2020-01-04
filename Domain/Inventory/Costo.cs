@@ -27,6 +27,13 @@ namespace Domain.Inventory
 
         public static Costo AgregarCosto(int fkRepuestoId, int unidades, DateTime fechaEntrada, float costoUnitario)
         {
+            
+            // Validar si algun parametro esta fuera del minimo aceptable.
+
+            if (costoUnitario < 0 || unidades <= 0)
+                throw new ArgumentOutOfRangeException("", "Las Unidades deberian ser mayores a 0. " + 
+                    "El Costo Unitario debe ser mayor o igual que 0.");
+            
             try
             {
                 const string sqlString = 

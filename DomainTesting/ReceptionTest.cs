@@ -1,5 +1,4 @@
 using System;
-using Domain.Document;
 using Domain.Inventory;
 using Domain.Locations;
 using Domain.Products;
