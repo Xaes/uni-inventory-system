@@ -231,3 +231,12 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='LineaDocumento' and xtype='U
         CONSTRAINT PK_LineaDocumento PRIMARY KEY NONCLUSTERED (LineaDocumento_ID)
     )
 
+/** POPULANDO **/
+/** TIPO DE DOCUMENTOS **/
+
+INSERT INTO TipoDocumento (UltimoNumDoc, Nombre, CambiaUnidades, CambiaCosto)
+VALUES
+        (1, 'Entrada por Compra', 1, 1),            /** ID: 1 **/
+        (1, 'Entrada por Transferencia', 1, 0),     /** ID: 2 **/
+        (1, 'Salida por Compra', 1, 1),             /** ID: 3 **/
+        (1, 'Salida por Transferencia', 1, 0);      /** ID: 4 **/
