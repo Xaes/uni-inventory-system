@@ -63,6 +63,18 @@ namespace Domain.Inventory
             if (string.CompareOrdinal(fkLocalizacionFinalId, fkLocalizacionInicialId) == 0)
                 throw new ArgumentException("Un Movimiento no puede tener la misma localizacion como inicial y final.");
             
+            var periodo = Periodo.GetPeriodoActivo();
+            
+            // Checkear si existe un periodo activo.
+            
+            if(periodo == null)
+                throw new InvalidOperationException("No hay un periodo activo.");
+                
+            // Checkear si la fecha proporcionada esta dentro del rango del periodo activo.
+            
+            if (periodo.FechaInicio.CompareTo(fecha) > 0 || periodo.FechaFinal.CompareTo(fecha) < 0)
+                throw new ArgumentException("La fecha propocionada debe estar dentro del rango del periodo activo.");
+            
             try
             {
                 

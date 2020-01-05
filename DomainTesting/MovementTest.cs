@@ -24,7 +24,7 @@ namespace DomainTesting
             estante.AgregarLocalizacion();
             var loc1 = estante.GetLocalizaciones()[0];
             var loc2 = estante.GetLocalizaciones()[1];
-            var periodo = Periodo.FindPeriodo(2018);
+            var periodo = Periodo.GetPeriodoActivo();
 
             Movimiento.AgregarMovimiento(loc1.Codigo, loc2.Codigo, periodo.Periodo_ID,
                 1000, 100, 10, DateTime.Now,

@@ -15,7 +15,6 @@ namespace DomainTesting
         {
             ProviderTest.PopularProveedores();
             DocumentTest.PopularDocumentos();
-            Periodo.AgregarPeriodo(2020, "Periodo 2020").Abrir();
         }
 
         [Test]
@@ -82,6 +81,7 @@ namespace DomainTesting
         [Test]
         public void AgregarProductosParametrosErroneos()
         {
+
             this.InitializeReceptionData();
             Assert.Multiple(() =>
             {

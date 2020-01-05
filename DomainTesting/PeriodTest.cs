@@ -12,6 +12,7 @@ namespace DomainTesting
         {
             Periodo.AgregarPeriodo(2018, "Año 2018");
             Periodo.AgregarPeriodo(2019, "Año 2019");
+            Periodo.AgregarPeriodo(2020, "Año 2020").Abrir();
         }
         
         [Test]
@@ -72,6 +73,7 @@ namespace DomainTesting
             Assert.Multiple(() =>
             {
                 
+                Assert.DoesNotThrow(Periodo.GetPeriodoActivo().Cerrar);
                 Assert.DoesNotThrow(periodo1.Abrir);
                 
                 Assert.Throws<InvalidOperationException>(() =>
