@@ -144,36 +144,22 @@ namespace Domain.Transaction
 
         public void SetBodega(int bodegaId)
         {
-            var bodega = Bodega.FindBodega(bodegaId);
-            this.recepcion.bodega = bodega;
+            this.recepcion.bodega = Bodega.FindBodega(bodegaId);
         }
         
         private void SetTipoDocumento(int tipoDocumentoId)
         {
-            var tipoDocumento = TipoDocumento.FindTipoDocumento(tipoDocumentoId);
-            this.recepcion.tipoDocumento = tipoDocumento;
+            this.recepcion.tipoDocumento = TipoDocumento.FindTipoDocumento(tipoDocumentoId);
         }
         
         public void SetProveedor(int proveedorId)
         {
-            var proveedor = Proveedor.FindProveedor(proveedorId);
-            this.recepcion.proveedor = proveedor;
+            this.recepcion.proveedor = Proveedor.FindProveedor(proveedorId);
         }
 
         public void SetFecha(DateTime fecha)
         {
-            var periodo = Periodo.GetPeriodoActivo();
-            
-            // Checkear si existe un periodo activo.
-            
-            if(periodo == null)
-                throw new InvalidOperationException("No hay un periodo activo.");
-            
-            // Checkear si la fecha proporcionada esta dentro del rango del periodo activo.
-
-            if (periodo.FechaInicio.CompareTo(fecha) > 0 || periodo.FechaFinal.CompareTo(fecha) < 0)
-                throw new ArgumentException("La fecha propocionada debe estar dentro del rango del periodo activo.");
-
+            Periodo.DentroPeriodoActivo(fecha);
             this.recepcion.fecha = fecha;
         }
 

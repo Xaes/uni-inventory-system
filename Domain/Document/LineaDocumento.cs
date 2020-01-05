@@ -1,6 +1,5 @@
 using Dapper;
 using Domain.DB;
-using Microsoft.Data.SqlClient;
 
 namespace Domain.Document
 {

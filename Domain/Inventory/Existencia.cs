@@ -41,7 +41,7 @@ namespace Domain.Inventory
                     "Values (@fkRepuestoId, @unidades, @fkLocalizacionId); Select Cast(SCOPE_IDENTITY() as int)";
 
                 var id = DbCliente.GetConexion()
-                    .Execute(sqlString, new {fkRepuestoId, unidades, fkLocalizacionId});
+                    .Execute(sqlString, new { fkRepuestoId, unidades, fkLocalizacionId });
 
                 return new Existencia(id, fkRepuestoId, unidades, fkLocalizacionId);
             }
@@ -76,7 +76,7 @@ namespace Domain.Inventory
         public Existencia AgregarUnidades(int cantidad)
         {
             
-            // Checkear si cantidad proporcionada es mayor a 0.
+            // Checkear si cantidad proporcionada es menor a 1.
             
             if(cantidad < 1)
                 throw new ArgumentOutOfRangeException(nameof(cantidad), "Cantidad debe ser mayor a 0. Para extraer, use el metodo Extraer Unidades");
@@ -114,6 +114,13 @@ namespace Domain.Inventory
         {
             const string sqlString = "Select * From Existencia Where FK_Repuesto_ID = @FK_Repuesto_ID";
             return DbCliente.GetConexion().Query<Existencia>(sqlString, new { repuestoId }).ToList();
+        }
+
+        public static Existencia FindExistenciaByRepLoc(int repuestoId, string localizacionId)
+        {
+            const string sqlString = "Select * From Existencia Where FK_Repuesto_ID = @repuestoId And" +
+                                     "FK_Localizacion_ID = @FK_Localizacion_ID";
+            return DbCliente.GetConexion().QueryFirstOrDefault<Existencia>(sqlString, new { repuestoId, localizacionId });
         }
 
         public override string ToString()

@@ -51,6 +51,12 @@ namespace Domain.Locations
             const string sqlString = "Select * From Localizacion";
             return DbCliente.GetConexion().Query<Localizacion>(sqlString).ToList();
         }
+
+        public static Localizacion GetLocalizacion(string codigo)
+        {
+            const string sqlString = "Select * From Localizacion Where Codigo = @codigo";
+            return DbCliente.GetConexion().QueryFirstOrDefault<Localizacion>(sqlString, new { codigo });
+        }
         
         public override string ToString()
         {
