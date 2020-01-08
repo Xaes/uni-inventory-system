@@ -150,13 +150,13 @@ namespace DomainTesting
                         1000F,
                         Localizacion.GetLocalizaciones()[2]
                     );
-                });
+                }, "[ERROR]: Un ArgumentException deberia ser lanzando por agregar una localizacion fuera de la bodega establecida en el Documento.");
 
             });
         }
 
         [Test]
-        public void ConstruirReception()
+        public void ConstruirRecepcion()
         {
             this.InitializeReceptionData();
             Assert.Multiple(() =>
@@ -177,7 +177,7 @@ namespace DomainTesting
                         Localizacion.GetLocalizaciones()[0]
                     );
                     builder.Build();
-                });
+                }, "[ERROR]: Un ArgumentNullException deberia ser lanzando por pasar un parametro nulo.");
                 
                 Assert.Throws<ArgumentNullException>(() =>
                 {
@@ -194,7 +194,7 @@ namespace DomainTesting
                         Localizacion.GetLocalizaciones()[0]
                     );
                     builder.Build();
-                });
+                }, "[ERROR]: Un ArgumentNullException deberia ser lanzando por pasar un parametro nulo." );
                 
                 Assert.Throws<InvalidOperationException>(() =>
                 {
@@ -203,7 +203,7 @@ namespace DomainTesting
                     builder.SetFecha(new DateTime(2020, 9, 28));
                     builder.SetProveedor(Proveedor.FindProveedor(1).Proveedor_ID);
                     builder.Build();
-                });
+                }, "[ERROR]: Un ArgumentNullException deberia ser lanzando por pasar un parametro nulo.");
                 
             });
         }
