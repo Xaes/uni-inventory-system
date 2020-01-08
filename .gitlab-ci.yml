@@ -17,5 +17,7 @@ build_nuget:
     only:
         - master
         changes:
-          - Domain/*
+          - Dockerfile
+          - assets/*
+
 
