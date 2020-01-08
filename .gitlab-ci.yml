@@ -5,7 +5,9 @@ before_script:
     - 'dotnet restore'
     
 variables:
-    nugetPackage: "InventorySystem.Domain.DiegoBalmaceda.1.0.0.nupkg"
+    nugetPackage: "InventorySystem.Domain.DiegoBalmaceda.*.nupkg"
+    apiKey: "oy2mmhfyiyqzw422cmpapauvdursg6ouzjpnhunmcuhody"
+    nugetSrc: "https://api.nuget.org/v3/index.json"
 
 build_nuget:
     stage: build
@@ -13,7 +15,7 @@ build_nuget:
         name: mcr.microsoft.com/dotnet/core/sdk:3.0.101-disco
     script:
         - 'dotnet msbuild InventorySystem.sln /t:Clean,ReBuild /p:Configuration=Release;Platform="Any CPU"'
-        - 'dotnet nuget push /builds/xaesdesign/inventory-system/Domain/bin/Release/$nugetPackage -k oy2mmhfyiyqzw422cmpapauvdursg6ouzjpnhunmcuhody -s https://api.nuget.org/v3/index.json'
+        - 'dotnet nuget push /builds/xaesdesign/inventory-system/Domain/bin/Release/$nugetPackage -k $apiKey -s $nugetSrc'
     only:
         refs:
             - master
