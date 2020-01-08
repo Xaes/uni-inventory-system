@@ -20,9 +20,11 @@ namespace DomainTesting
             var repuesto = Repuesto.FindRepuesto(1);
             var tipoDocumento = TipoDocumento.FindTipoDocumento(TipoDocumento.IDS[TipoDocumentos.ENTRADA_COMPRA]);
             
-            var documento = Documento.AgregarDocumento(null, tipoDocumento.TipoDocumento_ID, DateTime.Now);
+            var documento = Documento.AgregarDocumento(Bodega.FindBodega(1).Bodega_ID, null, 
+                tipoDocumento.TipoDocumento_ID, DateTime.Now);
+            
             documento.AgregarLinea(Movimiento.FindMovimiento(1).Movimiento_ID,
-                repuesto.Repuesto_ID, bodega.Bodega_ID, 10, 1, 1, 3,
+                repuesto.Repuesto_ID, 10, 1, 1, 3,
                 10.50F, null);
         }
 
@@ -81,7 +83,6 @@ namespace DomainTesting
                 var documento = Documento.FindDocumento(1);
                 documento.AgregarLinea(Movimiento.FindMovimiento(1).Movimiento_ID,
                     Repuesto.FindRepuesto(1).Repuesto_ID,
-                    Bodega.FindBodega(1).Bodega_ID,
                     0,
                     -1,
                     -1,

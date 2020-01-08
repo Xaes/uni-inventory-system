@@ -206,6 +206,7 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Documento' and xtype='U')
         Documento_ID int IDENTITY,
         FK_ProveedorID int FOREIGN KEY REFERENCES Proveedor(Proveedor_ID),
         FK_TipoDocumentoID int NOT NULL FOREIGN KEY REFERENCES TipoDocumento(TipoDocumento_ID),
+        FK_BodegaID int FOREIGN KEY REFERENCES Bodega(Bodega_ID),
         NumeroDoc int NOT NULL,
         Fecha datetime NOT NULL,
 
@@ -220,7 +221,6 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='LineaDocumento' and xtype='U
         FK_DocumentoID int FOREIGN KEY REFERENCES Documento(Documento_ID),
         FK_MovimientoID int FOREIGN KEY REFERENCES Movimiento(Movimiento_ID),
         FK_RepuestoID int FOREIGN KEY REFERENCES Repuesto(Repuesto_ID),
-        FK_BodegaID int FOREIGN KEY REFERENCES Bodega(Bodega_ID),
         Unidades int NOT NULL,
         UnidadesNoRecibidas int,
         UnidadesDanadas int,

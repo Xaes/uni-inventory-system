@@ -6,22 +6,21 @@ namespace Domain.Document
     public class LineaDocumento
     {
 
-        public int LineaDocumentoID, FK_DocumentoID, FK_MovimientoID, FK_RepuestoID, FK_BodegaID;
+        public int LineaDocumentoID, FK_DocumentoID, FK_MovimientoID, FK_RepuestoID;
         public int Unidades;
         public int? UnidadesNoRecibidas, UnidadesDanadas, CantidadPaquetes;
         public float? CostoUnitario, PrecioVentaUnitario;
         
         public LineaDocumento() {}
         
-        public LineaDocumento(int lineaDocumentoId, int fkDocumentoId, int fkMovimientoId, int fkRepuestoId, 
-            int fkBodegaId, int unidades, int? unidadesNoRecibidas, int? unidadesDanadas, int? cantidadPaquetes, 
+        public LineaDocumento(int lineaDocumentoId, int fkDocumentoId, int fkMovimientoId, int fkRepuestoId,
+            int unidades, int? unidadesNoRecibidas, int? unidadesDanadas, int? cantidadPaquetes, 
             float? costoUnitario, float? precioVentaUnitario)
         {
             this.LineaDocumentoID = lineaDocumentoId;
             this.FK_DocumentoID = fkDocumentoId;
             this.FK_MovimientoID = fkMovimientoId;
             this.FK_RepuestoID = fkRepuestoId;
-            this.FK_BodegaID = fkBodegaId;
             this.Unidades = unidades;
             this.UnidadesNoRecibidas = unidadesNoRecibidas;
             this.UnidadesDanadas = unidadesDanadas;
@@ -39,7 +38,7 @@ namespace Domain.Document
         public override string ToString()
         {
             return $"Linea Documento: [ID: {LineaDocumentoID} / Documento: {FK_DocumentoID} / " +
-                   $"Repuesto: {FK_RepuestoID} / Movimiento: {FK_MovimientoID} / Bodega: {FK_BodegaID} / " +
+                   $"Repuesto: {FK_RepuestoID} / Movimiento: {FK_MovimientoID} / " +
                    $"Costo Unitario: {CostoUnitario} / Cantidad de Paquetes: {CantidadPaquetes} / " +
                    $"Precio Venta Unitario: {PrecioVentaUnitario}" + $"Unidades: {Unidades} / " +
                    $"Unidades Faltantes: {UnidadesNoRecibidas} / Unidades Danadas: {UnidadesDanadas}]";

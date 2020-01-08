@@ -42,6 +42,7 @@ namespace Domain.Transaction
             // Agregando Documento.
 
             var documento = Documento.AgregarDocumento(
+                transaccion.bodegaOrigen.Bodega_ID,
                 null,
                 transaccion.tipoDocumento.TipoDocumento_ID,
                 transaccion.fecha

@@ -39,6 +39,7 @@ namespace Domain.Transaction
             // Agregando Documento.
 
             var documento = Documento.AgregarDocumento(
+                transaccion.bodega.Bodega_ID,
                 transaccion.proveedor.Proveedor_ID,
                 transaccion.tipoDocumento.TipoDocumento_ID,
                 transaccion.fecha
@@ -67,7 +68,6 @@ namespace Domain.Transaction
                 documento.AgregarLinea(
                     movimiento.Movimiento_ID,
                     data["repuesto"],
-                    transaccion.bodega.Bodega_ID,
                     data["unidades"],
                     data["unidadesFaltantes"],
                     data["unidadesDanadas"],
