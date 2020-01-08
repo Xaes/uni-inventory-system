@@ -25,6 +25,10 @@ namespace Domain.Transaction
         public Transferencia Build()
         {
             
+            // Definiendo el Tipo de Documento.
+            
+            this.SetTipoDocumento(TipoDocumento.FindTipoDocumento(TipoDocumento.IDS[TipoDocumentos.TRANSFERENCIA]).TipoDocumento_ID);
+            
             // Validar si los atributos no son nulos.
             
             if(this.transferencia.bodegaDestino == null || this.transferencia.bodegaOrigen == null ||
@@ -42,6 +46,7 @@ namespace Domain.Transaction
             // Agregando Documento.
 
             var documento = Documento.AgregarDocumento(
+                transaccion.bodegaOrigen.Bodega_ID,
                 null,
                 transaccion.tipoDocumento.TipoDocumento_ID,
                 transaccion.fecha
@@ -54,7 +59,7 @@ namespace Domain.Transaction
                 
                 // Generando Movimiento para ambas Bodegas.
 
-                Movimiento movimientoSalida = Movimiento.AgregarMovimiento(
+                Movimiento.AgregarMovimiento(
                     data["localizacionOrigen"],
                     data["localizacionDestino"],
                     Periodo.GetPeriodoActivo().Periodo_ID,
@@ -65,7 +70,7 @@ namespace Domain.Transaction
                     TipoTransaccion.SALIDA
                 );
                 
-                Movimiento movimientoEntrada = Movimiento.AgregarMovimiento(
+                Movimiento.AgregarMovimiento(
                     data["localizacionOrigen"],
                     data["localizacionDestino"],
                     Periodo.GetPeriodoActivo().Periodo_ID,
@@ -76,6 +81,18 @@ namespace Domain.Transaction
                     TipoTransaccion.SALIDA
                 );
                 
+                // Extrayendo Existencias.
+
+                Existencia existenciaOrigen = Existencia.FindExistencia(data["existenciaRepuesto"]);
+                existenciaOrigen.ExtraerUnidades(data["unidades"]);
+                
+                // Creando nueva Existencia
+
+                Existencia.AgregarExistencia(
+                existenciaOrigen.Existencia_ID,
+                data["unidades"],
+                data["localizacionDestino"]
+                );
                 
             });
             
@@ -93,18 +110,9 @@ namespace Domain.Transaction
             this.transferencia.bodegaDestino = Bodega.FindBodega(bodegaId);
         }
 
-        public void SetTipoDocumento(int tipoDocumentoId)
+        private void SetTipoDocumento(int tipoDocumentoId)
         {
-
-            // Checkear si el Tipo de Documento es: Entrada por Transferencia o Salida por Transferencia.
-
-            if (tipoDocumentoId != TipoDocumento.IDS[TipoDocumentos.SALIDA_TRANSFERENCIA] &&
-                tipoDocumentoId != TipoDocumento.IDS[TipoDocumentos.ENTRADA_TRANSFERENCIA]
-            )
-                throw new ArgumentException("El tipo de Documento proporcionado no es valido para la Transferencia.");
-            
             this.transferencia.tipoDocumento = TipoDocumento.FindTipoDocumento(tipoDocumentoId);
-            
         }
 
         public void SetFecha(DateTime fecha)
@@ -136,7 +144,7 @@ namespace Domain.Transaction
             var existencia = Existencia.FindExistencia(existenciaId);
             
             if(existencia == null)
-                throw new ArgumentException("El producto tiene existencias en la base de datos.");
+                throw new ArgumentException("El producto no tiene existencias en la base de datos.");
             
             // Validar si la Existencia Pertenece a la Bodega de Origen.
             

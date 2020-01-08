@@ -206,6 +206,7 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Documento' and xtype='U')
         Documento_ID int IDENTITY,
         FK_ProveedorID int FOREIGN KEY REFERENCES Proveedor(Proveedor_ID),
         FK_TipoDocumentoID int NOT NULL FOREIGN KEY REFERENCES TipoDocumento(TipoDocumento_ID),
+        FK_BodegaID int FOREIGN KEY REFERENCES Bodega(Bodega_ID),
         NumeroDoc int NOT NULL,
         Fecha datetime NOT NULL,
 
@@ -220,7 +221,6 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='LineaDocumento' and xtype='U
         FK_DocumentoID int FOREIGN KEY REFERENCES Documento(Documento_ID),
         FK_MovimientoID int FOREIGN KEY REFERENCES Movimiento(Movimiento_ID),
         FK_RepuestoID int FOREIGN KEY REFERENCES Repuesto(Repuesto_ID),
-        FK_BodegaID int FOREIGN KEY REFERENCES Bodega(Bodega_ID),
         Unidades int NOT NULL,
         UnidadesNoRecibidas int,
         UnidadesDanadas int,
@@ -237,6 +237,5 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='LineaDocumento' and xtype='U
 INSERT INTO TipoDocumento (UltimoNumDoc, Nombre, CambiaUnidades, CambiaCosto)
 VALUES
         (1, 'Entrada por Compra', 1, 1),            /** ID: 1 **/
-        (1, 'Entrada por Transferencia', 1, 0),     /** ID: 2 **/
-        (1, 'Salida por Compra', 1, 1),             /** ID: 3 **/
-        (1, 'Salida por Transferencia', 1, 0);      /** ID: 4 **/
+        (1, 'Salida por Compra', 1, 1),             /** ID: 2 **/
+        (1, 'Transferencia', 1, 0);                 /** ID: 3 **/
