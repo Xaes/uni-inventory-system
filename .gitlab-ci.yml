@@ -16,3 +16,6 @@ build_nuget:
         - 'dotnet nuget push /builds/xaesdesign/inventory-system/Domain/bin/Release/$nugetPackage -k oy2mmhfyiyqzw422cmpapauvdursg6ouzjpnhunmcuhody -s https://api.nuget.org/v3/index.json'
     only:
         - master
+        changes:
+          - Domain/*
+
