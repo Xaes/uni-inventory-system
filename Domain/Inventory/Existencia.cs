@@ -36,14 +36,28 @@ namespace Domain.Inventory
 
             try
             {
-                const string sqlString =
-                    "Insert Into Existencia (FK_Repuesto_ID, Unidades, FK_Localizacion_ID)" +
-                    "Values (@fkRepuestoId, @unidades, @fkLocalizacionId); Select Cast(SCOPE_IDENTITY() as int)";
+                
+                // Checkear si ya se encuentra una Existencia con la misma Localizacion / Repuesto.
 
-                var id = DbCliente.GetConexion()
-                    .Execute(sqlString, new { fkRepuestoId, unidades, fkLocalizacionId });
+                var existencia = Existencia.FindExistenciaByRepLoc(fkRepuestoId, fkLocalizacionId);
+                
+                // Si ya hay una existencia presente, actualizar. De lo contrario, solo agregar.
+                
+                if (existencia != null)
+                {
+                    existencia.AgregarUnidades(unidades);
+                    return existencia;
+                } else {
+                    const string sqlString =
+                        "Insert Into Existencia (FK_Repuesto_ID, Unidades, FK_Localizacion_ID)" +
+                        "Values (@fkRepuestoId, @unidades, @fkLocalizacionId); Select Cast(SCOPE_IDENTITY() as int)";
 
-                return new Existencia(id, fkRepuestoId, unidades, fkLocalizacionId);
+                    var id = DbCliente.GetConexion()
+                        .Execute(sqlString, new { fkRepuestoId, unidades, fkLocalizacionId });
+
+                    return new Existencia(id, fkRepuestoId, unidades, fkLocalizacionId);
+                }
+                
             }
             catch (SqlException ex)
             {
@@ -118,8 +132,8 @@ namespace Domain.Inventory
 
         public static Existencia FindExistenciaByRepLoc(int repuestoId, string localizacionId)
         {
-            const string sqlString = "Select * From Existencia Where FK_Repuesto_ID = @repuestoId And" +
-                                     "FK_Localizacion_ID = @FK_Localizacion_ID";
+            const string sqlString = "Select * From Existencia Where FK_Repuesto_ID = @repuestoId And " +
+                                     "FK_Localizacion_ID = @localizacionId";
             return DbCliente.GetConexion().QueryFirstOrDefault<Existencia>(sqlString, new { repuestoId, localizacionId });
         }
 

@@ -38,10 +38,11 @@ namespace DomainTesting
         public void DuplicarExistencias()
         {
             this.PopularExistencias();
-            Assert.Throws<DuplicateNameException>(() =>
-            {
-                this.PopularExistencias();
-            }, "[ERROR]: Una excepcion DuplicateNameException deberia ser lanzada en creacion de Existencias.");
+            var localizacion = Localizacion.GetLocalizaciones()[0];
+            var repuesto = Repuesto.GetRepuestos()[0];
+            var existencia = Existencia.AgregarExistencia(repuesto.Repuesto_ID, 10, localizacion.Codigo);
+            Assert.AreEqual(20, existencia.Unidades, "[ERROR]: La agregacion de una existencia con la misma localizacion" +
+                                                     " y producto deberia agregar unidades a una ya existente.");
         }
 
         [Test]
