@@ -13,7 +13,7 @@ build_nuget:
         name: mcr.microsoft.com/dotnet/core/sdk:3.0.101-disco
     script:
         - 'dotnet msbuild InventorySystem.sln /t:Clean,ReBuild /p:Configuration=Release;Platform="Any CPU"'
-        - 'dotnet nuget push /builds/xaesdesign/inventory-system/Domain/bin/Release/$nugetPackage -k oy2mmhfyiyqzw422cmpapauvdursg6ouzjpnhunmcuhody -s https://api.nuget.org/v3/index.json'
+        - 'dotnet nuget push -source /builds/xaesdesign/inventory-system/Domain/bin/Release/ -k oy2mmhfyiyqzw422cmpapauvdursg6ouzjpnhunmcuhody -s https://api.nuget.org/v3/index.json'
     only:
         refs:
             - master
