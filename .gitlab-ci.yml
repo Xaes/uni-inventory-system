@@ -1,7 +1,7 @@
 stages:
     - build
 before_script:
-    - 'nuget restore InventorySystem.sln'
+    - 'dotnet restore InventorySystem.sln'
 build_nuget:
     stage: build
     image:
