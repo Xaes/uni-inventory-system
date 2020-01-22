@@ -51,6 +51,46 @@ namespace Domain.Inventory
             }
         }
 
+        public static List<Dictionary<string, int>> ExtraerCostos(int repuestoId, int cantidad)
+        {
+            
+            if(cantidad < 1 )
+                throw new ArgumentOutOfRangeException(nameof(cantidad), "Cantidad a extraer no puede ser menor a 1.");
+            
+            const string sqlString = "SELECT * FROM Costo WHERE FK_Repuesto_ID = @repuestoId ORDER BY FechaEntrada ASC";
+            var costos = DbCliente.GetConexion().Query<Costo>(sqlString, new { repuestoId }).ToList();
+            
+            if(costos.Count < 1)
+                throw new InvalidOperationException("No existen costos para este producto.");
+
+            // Extrayendo Costos.
+
+            var costosExtraidos = new List<Dictionary<string, int>>();
+            
+            Action<int, int> crearDict = (id, c) =>
+            {
+                costosExtraidos.Add(new Dictionary<string, int>
+                {
+                    {"id", id},
+                    {"cantidad", c}
+                });
+            };
+
+            foreach (var costo in costos)
+            {
+                if (cantidad - costo.Unidades > 0)
+                {
+                    cantidad -= costo.Unidades;
+                    crearDict(costo.Costo_ID, costo.Unidades);
+                } else {
+                    crearDict(costo.Costo_ID, (cantidad > costo.Unidades) ? costo.Unidades : cantidad);
+                    break;
+                }
+            }
+
+            return costosExtraidos;
+        }
+
         public static List<Costo> GetCostos()
         {
             const string sqlString = "Select * From Costo";
@@ -65,7 +105,7 @@ namespace Domain.Inventory
 
         public override string ToString()
         {
-            return $"Costo: [ID: {Costo_ID} / Repuesto: {FK_Repuesto_ID} / Costo Unit.: {CostoUnitario}" +
+            return $"Costo: [ID: {Costo_ID} / Repuesto: {FK_Repuesto_ID} / Costo Unit.: {CostoUnitario} / " +
                    $"Unidades: {Unidades} / Fecha de Entrada: {FechaEntrada}]";
         }
         

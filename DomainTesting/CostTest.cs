@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Domain.Document;
 using Domain.Inventory;
 using Domain.Products;
@@ -15,6 +17,8 @@ namespace DomainTesting
             var repuesto = Repuesto.FindRepuesto(1);
 
             Costo.AgregarCosto(repuesto.Repuesto_ID, 10, DateTime.Now, 10.50F);
+            Costo.AgregarCosto(repuesto.Repuesto_ID, 15, new DateTime(2019, 8, 30), 11F);
+            Costo.AgregarCosto(repuesto.Repuesto_ID, 5, new DateTime(2019, 9, 29), 12F);
         }
 
         [Test]
@@ -25,6 +29,35 @@ namespace DomainTesting
                 this.PopularCostos();
                 Costo.FindCosto(1);
                 Costo.GetCostos();
+            });
+        }
+
+        [Test]
+        public void ExtraerCostos()
+        {
+            this.PopularCostos();
+            Assert.Multiple(() =>
+            {
+                
+                var costos = Costo.ExtraerCostos(1, 29);
+                Assert.AreEqual(3, costos.Count);
+                Assert.AreEqual(15, costos[0]["cantidad"]);
+                Assert.AreEqual(5, costos[1]["cantidad"]);
+                Assert.AreEqual(9, costos[2]["cantidad"]);
+                
+                costos = Costo.ExtraerCostos(1, 30);
+                Assert.AreEqual(3, costos.Count);
+                Assert.AreEqual(15, costos[0]["cantidad"]);
+                Assert.AreEqual(5, costos[1]["cantidad"]);
+                Assert.AreEqual(10, costos[2]["cantidad"]);
+                
+                costos = Costo.ExtraerCostos(1, 8);
+                Assert.AreEqual(1, costos.Count);
+                Assert.AreEqual(8, costos[0]["cantidad"]);
+
+                Assert.Throws<ArgumentOutOfRangeException>(() => Costo.ExtraerCostos(1, 0));
+                Assert.Throws<InvalidOperationException>(() => Costo.ExtraerCostos(2, 1));
+                
             });
         }
 

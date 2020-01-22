@@ -16,6 +16,7 @@
 x64/
 [Bb]in/
 [Oo]bj/
+.dll
 
 # MSTest test Results
 
