@@ -51,21 +51,27 @@ namespace Domain.Inventory
             }
         }
 
-        public static List<Dictionary<string, int>> ExtraerCostos(int repuestoId, int cantidad)
+        public static List<Dictionary<string, int>> ProyectarExtraccion(int repuestoId, int cantidad)
         {
             
             if(cantidad < 1 )
                 throw new ArgumentOutOfRangeException(nameof(cantidad), "Cantidad a extraer no puede ser menor a 1.");
             
+            // Trayendo Costos ordenados por Fecha de Entrada.
+            
             const string sqlString = "SELECT * FROM Costo WHERE FK_Repuesto_ID = @repuestoId ORDER BY FechaEntrada ASC";
             var costos = DbCliente.GetConexion().Query<Costo>(sqlString, new { repuestoId }).ToList();
             
+            // Validar si la lista de Costos esta vacia.
+            
             if(costos.Count < 1)
                 throw new InvalidOperationException("No existen costos para este producto.");
-
-            // Extrayendo Costos.
-
+            
+            // Definiendo Estructura de un Resultado (Datos de Proyeccion).
+            
             var costosExtraidos = new List<Dictionary<string, int>>();
+            
+            // Lambda para agregar a la Proyeccion.
             
             Action<int, int> crearDict = (id, c) =>
             {
@@ -75,6 +81,8 @@ namespace Domain.Inventory
                     {"cantidad", c}
                 });
             };
+            
+            // Extrayendo Costos.
 
             foreach (var costo in costos)
             {
@@ -89,6 +97,42 @@ namespace Domain.Inventory
             }
 
             return costosExtraidos;
+        }
+
+        public static void ExtraerCosto(int repuestoId, int cantidad)
+        {
+            var proyeccion = Costo.ProyectarExtraccion(repuestoId, cantidad);
+            proyeccion.ForEach(p => Costo.FindCosto(p["id"]).ExtraerUnidades(p["cantidad"]));
+        }
+        
+        private Costo ExtraerUnidades(int cantidad)
+        {
+            
+            if(cantidad > this.Unidades)
+                throw new InvalidOperationException("No se pueden extraer mas unidades que las existentes.");
+
+            if (cantidad == this.Unidades)
+            {
+                this.Unidades = 0;
+                this.Eliminar();
+                return this;
+            }
+            
+            var nuevaCantidad = this.Unidades - cantidad;
+            const string sqlString = "Update Costo Set Unidades = @nuevaCantidad Where Costo_ID = @Costo_ID;";
+            DbCliente.GetConexion().Execute(sqlString, new { nuevaCantidad, this.Costo_ID });
+            this.Unidades = nuevaCantidad;
+            return this;
+            
+        }
+
+        private void Eliminar()
+        {
+            if(this.Unidades != 0)
+                throw new InvalidOperationException("No se puede eliminar un costo que tiene todavia unidades presentes.");
+            
+            const string sqlString = "Delete From Costo Where Costo_ID = @Costo_ID";
+            DbCliente.GetConexion().Execute(sqlString, new { this.Costo_ID });
         }
 
         public static List<Costo> GetCostos()

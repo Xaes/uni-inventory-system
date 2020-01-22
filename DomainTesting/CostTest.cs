@@ -33,31 +33,46 @@ namespace DomainTesting
         }
 
         [Test]
-        public void ExtraerCostos()
+        public void ProyectarExtraccion()
         {
             this.PopularCostos();
             Assert.Multiple(() =>
             {
                 
-                var costos = Costo.ExtraerCostos(1, 29);
+                var costos = Costo.ProyectarExtraccion(1, 29);
                 Assert.AreEqual(3, costos.Count);
                 Assert.AreEqual(15, costos[0]["cantidad"]);
                 Assert.AreEqual(5, costos[1]["cantidad"]);
                 Assert.AreEqual(9, costos[2]["cantidad"]);
                 
-                costos = Costo.ExtraerCostos(1, 30);
+                costos = Costo.ProyectarExtraccion(1, 30);
                 Assert.AreEqual(3, costos.Count);
                 Assert.AreEqual(15, costos[0]["cantidad"]);
                 Assert.AreEqual(5, costos[1]["cantidad"]);
                 Assert.AreEqual(10, costos[2]["cantidad"]);
                 
-                costos = Costo.ExtraerCostos(1, 8);
+                costos = Costo.ProyectarExtraccion(1, 8);
                 Assert.AreEqual(1, costos.Count);
                 Assert.AreEqual(8, costos[0]["cantidad"]);
 
-                Assert.Throws<ArgumentOutOfRangeException>(() => Costo.ExtraerCostos(1, 0));
-                Assert.Throws<InvalidOperationException>(() => Costo.ExtraerCostos(2, 1));
+                Assert.Throws<ArgumentOutOfRangeException>(() => Costo.ProyectarExtraccion(1, 0));
+                Assert.Throws<InvalidOperationException>(() => Costo.ProyectarExtraccion(2, 1));
                 
+            });
+        }
+
+        [Test]
+        public void ExtraerCostos()
+        {
+            PopularCostos();
+            Assert.Multiple(() =>
+            {
+                Costo.ExtraerCosto(1, 8);
+                Assert.AreEqual(3, Costo.GetCostos().Count);
+                Assert.AreEqual(7, Costo.FindCosto(2).Unidades);
+                Costo.ExtraerCosto(1, 8);
+                Assert.AreEqual(2, Costo.GetCostos().Count);
+                Assert.AreEqual(4, Costo.FindCosto(3).Unidades);
             });
         }
 
