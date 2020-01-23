@@ -11,7 +11,7 @@ namespace Domain.Document
     public enum TipoDocumentos
     {
         ENTRADA_COMPRA,
-        SALIDA_COMPRA, 
+        SALIDA_VENTA, 
         TRANSFERENCIA
     }
     
@@ -26,7 +26,7 @@ namespace Domain.Document
         public static Dictionary<TipoDocumentos, int> IDS = new Dictionary<TipoDocumentos, int>
         {
             { TipoDocumentos.ENTRADA_COMPRA, 1 },
-            { TipoDocumentos.SALIDA_COMPRA, 2 },
+            { TipoDocumentos.SALIDA_VENTA, 2 },
             { TipoDocumentos.TRANSFERENCIA, 3 }
         };
         

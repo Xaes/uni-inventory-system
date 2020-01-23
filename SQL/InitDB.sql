@@ -237,5 +237,5 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='LineaDocumento' and xtype='U
 INSERT INTO TipoDocumento (UltimoNumDoc, Nombre, CambiaUnidades, CambiaCosto)
 VALUES
         (1, 'Entrada por Compra', 1, 1),            /** ID: 1 **/
-        (1, 'Salida por Compra', 1, 1),             /** ID: 2 **/
+        (1, 'Salida por Venta', 1, 1),              /** ID: 2 **/
         (1, 'Transferencia', 1, 0);                 /** ID: 3 **/

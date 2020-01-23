@@ -88,7 +88,7 @@ namespace Domain.Inventory
                     "@costoUnitario, @precioVentaUnitario, @unidades, @fecha, @tipoTransaccion);" +
                     "Select Cast(SCOPE_IDENTITY() as int)";
 
-                var id = DbCliente.GetConexion().Execute(sqlString, new
+                var id = (int) DbCliente.GetConexion().ExecuteScalar(sqlString, new
                 {
                     fkLocalizacionInicialId, fkLocalizacionFinalId, fkPeriodoId,
                     costoTotal, costoUnitario, precioVentaUnitario, unidades, fecha, tipoTransaccion

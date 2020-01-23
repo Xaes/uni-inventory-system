@@ -51,7 +51,7 @@ namespace Domain.Inventory
             }
         }
 
-        public static List<Dictionary<string, int>> ProyectarExtraccion(int repuestoId, int cantidad)
+        public static List<Dictionary<string, dynamic>> ProyectarExtraccion(int repuestoId, int cantidad)
         {
             
             if(cantidad < 1 )
@@ -69,16 +69,17 @@ namespace Domain.Inventory
             
             // Definiendo Estructura de un Resultado (Datos de Proyeccion).
             
-            var costosExtraidos = new List<Dictionary<string, int>>();
+            var costosExtraidos = new List<Dictionary<string, dynamic>>();
             
             // Lambda para agregar a la Proyeccion.
             
-            Action<int, int> crearDict = (id, c) =>
+            Action<int, int, float> crearDict = (id, c, costoUnitario) =>
             {
-                costosExtraidos.Add(new Dictionary<string, int>
+                costosExtraidos.Add(new Dictionary<string, dynamic>
                 {
                     {"id", id},
-                    {"cantidad", c}
+                    {"cantidad", c},
+                    {"costoUnitario", costoUnitario}
                 });
             };
             
@@ -89,9 +90,9 @@ namespace Domain.Inventory
                 if (cantidad - costo.Unidades > 0)
                 {
                     cantidad -= costo.Unidades;
-                    crearDict(costo.Costo_ID, costo.Unidades);
+                    crearDict(costo.Costo_ID, costo.Unidades, costo.CostoUnitario);
                 } else {
-                    crearDict(costo.Costo_ID, (cantidad > costo.Unidades) ? costo.Unidades : cantidad);
+                    crearDict(costo.Costo_ID, (cantidad > costo.Unidades) ? costo.Unidades : cantidad, costo.CostoUnitario);
                     break;
                 }
             }
@@ -99,10 +100,11 @@ namespace Domain.Inventory
             return costosExtraidos;
         }
 
-        public static void ExtraerCosto(int repuestoId, int cantidad)
+        public static List<Dictionary<string, dynamic>> ExtraerCosto(int repuestoId, int cantidad)
         {
             var proyeccion = Costo.ProyectarExtraccion(repuestoId, cantidad);
             proyeccion.ForEach(p => Costo.FindCosto(p["id"]).ExtraerUnidades(p["cantidad"]));
+            return proyeccion;
         }
         
         private Costo ExtraerUnidades(int cantidad)

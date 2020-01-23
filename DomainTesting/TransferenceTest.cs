@@ -10,7 +10,7 @@ namespace DomainTesting
     public class TransferenceTest : Setup
     {
 
-        public void InitializeTransferenceData()
+        public static void InitializeTransferenceData()
         {
             ProviderTest.PopularProveedores();
             DocumentTest.PopularDocumentos();
@@ -24,7 +24,7 @@ namespace DomainTesting
         [Test]
         public void AgregarTransferencia()
         {
-            this.InitializeTransferenceData();
+            InitializeTransferenceData();
             Assert.DoesNotThrow(() =>
             {
                 var builder = new TransferenciaBuilder();
@@ -40,7 +40,7 @@ namespace DomainTesting
         public void TransferenciaParametrosErroneos()
         {
             
-            this.InitializeTransferenceData();
+            InitializeTransferenceData();
             var builder = new TransferenciaBuilder();
             
             Assert.Multiple(() =>
@@ -62,7 +62,7 @@ namespace DomainTesting
         public void AgregarProductosParametrosErroneos()
         {
             
-            this.InitializeTransferenceData();
+            InitializeTransferenceData();
             var builder = new TransferenciaBuilder();
 
             
@@ -103,7 +103,7 @@ namespace DomainTesting
         public void ConstruirTransferencia()
         {
             
-            this.InitializeTransferenceData();
+            InitializeTransferenceData();
             Assert.Multiple(() =>
             {
                 Assert.Throws<ArgumentNullException>(() =>
