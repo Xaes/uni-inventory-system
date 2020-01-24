@@ -51,6 +51,7 @@ namespace DomainTesting
                 builder.SetFecha(DateTime.Now);
                 builder.SetProveedor(Proveedor.FindProveedor(1).Proveedor_ID);
                 builder.AgregarProductos(Existencia.FindExistencia(1).Existencia_ID, 5, 150F);
+                builder.AgregarProductos(Existencia.FindExistencia(1).Existencia_ID, 6, 150F);
                 builder.Build();
             });
             
@@ -103,7 +104,7 @@ namespace DomainTesting
         }
 
         [Test]
-        public void ConstruirRecepcion()
+        public void ConstruirEntrega()
         {
             this.InitializeDeliveringTest();
             Assert.Multiple(() =>
