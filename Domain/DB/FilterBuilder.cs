@@ -51,6 +51,9 @@ namespace Domain.DB
             if(this.criterias.Count < 1)
                 throw new InvalidOperationException("No se ha asignado ninguna Criteria a este Builder.");
 
+            if (this.clase == null)
+                throw new InvalidOperationException("No se ha establecido una clase para este builder");
+
             var filtros = (this.criterias.Count == 1) ?
                 this.criterias[0].GetExpresion() :
                 string.Join(" " + operadores[this.op] + " ", this.criterias.Select(c => c.GetExpresion()));
@@ -103,7 +106,6 @@ namespace Domain.DB
         
         private readonly string op;
         private readonly string atributo;
-        private readonly string valor;
 
         internal Criteria(string atributo, Operador op)
         {
